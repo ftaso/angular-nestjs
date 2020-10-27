@@ -1,0 +1,93 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+<div class="entrance-bar">
+    <ng-container *ngIf="mode=='exit'">
+        <div class="entrance-button">
+            <div class="button-label" (click)="enter('edit')">親機として入室</div>
+        </div>
+        <div class="entrance-button viewer-mode">
+            <div class="button-label" (click)="enter('view')">子機として入室</div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="mode=='view'">
+        <div class="entrance-button viewer-mode">
+            <div class="button-label">子機モード</div>
+        </div>
+        <!-- <div class="entrance-button">
+            <div class="button-label">親機に切替</div>
+        </div> -->
+    </ng-container>
+    <ng-container *ngIf="mode=='edit'">
+        <div class="entrance-button">
+            <div class="button-label">親機モード</div>
+        </div>
+        <!-- <div class="entrance-button viewer-mode">
+            <div class="button-label">子機として入室</div>
+        </div> -->
+    </ng-container>
+</div>
+<div class="find-bar">
+    <mat-form-field appearance="legacy" class="date-form">
+        <mat-label>日付選択</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+<div id="content">
+    <div id="left-content">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>利用者名</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let record of selectedDateRecordList; let i = index;">
+                    <tr>
+                        <td (click)="find(record)"
+                            [ngClass]="{'selected': selectedRecord && record.careReceiver.id_careReceiver == selectedRecord.careReceiver.id_careReceiver}">
+                            <span
+                                style="width: 120px; display: inline-block">{{record.careReceiver.str_careReceiver}}&nbsp;様</span>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+    <div id="center-content">
+        <div class="remark-box">
+            <div class="remark-title">本日の様子</div>
+            <div class="remark-area">
+                <ng-container *ngIf="handingOverData && handingOverData.length">{{handingOverData[0].str_report}}
+                </ng-container>
+            </div>
+        </div>
+        <div class="remark-box">
+            <div class="remark-title">特記事項</div>
+            <div class="remark-area">
+                <ng-container *ngIf="handingOverData && handingOverData.length">{{handingOverData[0].str_note}}
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <div id="right-content">
+        <div class="remark-box">
+            <div class="remark-title">申送り事項</div>
+            <ng-container *ngIf="mode=='view' || mode=='exit'">
+                <div class="remark-area handing-over">
+                    <ng-container *ngIf="handingOverData&& handingOverData.length">{{handingOverData[0].str_handingOver}}</ng-container>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="mode=='edit'">
+                <ng-container *ngIf="!handingOverData || !handingOverData.length">
+                    <div class="remark-area handing-over"></div>
+                </ng-container>
+                <ng-container *ngIf="handingOverData&& handingOverData.length">
+                    <textarea class="handing-over-area" name="remark" type="text" (ngModelChange)="emit($event)"
+                        [ngModel]="handingOverData[0].str_handingOver"></textarea>
+                </ng-container>
+            </ng-container>
+        </div>
+            <!-- <div class="button-label" (click)="save()">保存</div> -->
+    </div>
+</div>

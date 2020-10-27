@@ -1,0 +1,46 @@
+#card {
+    width: 400px;
+    height: 300px;
+    margin: 150px auto;
+    box-shadow: 0px 3px 5px #777;
+    // background: linear-gradient(to top, #DFD, #FFF);
+    background: #FFF;
+    border-radius: 5px;
+}
+
+#card-body {
+    padding: 20px 30px;
+}
+
+#card-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #FFF;
+    padding: 10px 30px 10px 30px;
+    background-color: #333;
+    border-radius: 5px 5px 0px 0px;
+    height: 24px;
+}
+
+#card-row {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#button-row {
+    text-align: end;
+    margin-top: 20px;
+}
+
+input {
+    padding: 5px 10px 2px;
+    font-size: 1.2rem;
+    margin: 5px;
+    border: 1px solid #333;
+ }
+
+ img {
+     width: 400px;
+     border-radius: 5px;
+ }

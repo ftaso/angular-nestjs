@@ -1,0 +1,59 @@
+<div class="table-area" [@dateChange]="state">
+    <div>
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>利用者名</th>
+                    <th>出欠</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of recordList; let i = index;">
+                    <td>
+                        <span style="width: 120px; display: inline-block">{{data.careReceiver.str_careReceiver}}</span>
+                    </td>
+                    <td>
+                        <div class="attendance-button" [ngClass]="{'not-selected':data.is_attendance==0}"
+                            (click)="attendance(data)">
+                            出席
+                        </div>
+                        <div class="absence-button" [ngClass]="{'not-selected':data.is_attendance==1}"
+                            (click)="absence(data)">
+                            欠席
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <ng-container *ngIf="!isAdd">
+                        <td colspan="2">
+                            <div matRipple class="add-careReceiver" (click)="isAdd = !isAdd">
+                                新規登録
+                            </div>
+                        </td>
+                    </ng-container>
+                    <ng-container *ngIf="isAdd">
+                        <td colspan="2">
+                            <div class="careReceiver-select">
+                                <mat-form-field appearance="legacy" class="name-form">
+                                    <mat-label>利用者名</mat-label>
+                                    <mat-select [(ngModel)]="selectedCareReceiverId">
+                                        <ng-container *ngFor="let careReceiver of unregistCareReceiverList;">
+                                            <mat-option [value]="careReceiver.id_careReceiver">{{careReceiver.str_careReceiver}}
+                                            </mat-option>
+                                        </ng-container>
+                                        <ng-container *ngIf="careReceiverList.length == 0">
+                                            <mat-option disabled>登録できる利用者はいません</mat-option>
+                                        </ng-container>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="regist-button" (click)="regist()">
+                                登録
+                            </div>
+                        </td>
+                    </ng-container>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

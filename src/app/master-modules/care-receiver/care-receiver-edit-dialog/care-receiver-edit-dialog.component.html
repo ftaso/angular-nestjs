@@ -1,0 +1,20 @@
+<div id="edit-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed'">
+    <!-- この中では利用者リストのデータから、ダイアログを開く前に渡されたIDのみを表示する -->
+    <ng-container *ngIf="(careReceiverData | async) | selectedCareReceiver:data.id as careReceiverData">
+        <div class="title">編集</div>
+        <div class="form-row">
+            <div class="form-label">利用者氏名</div>
+            <div class="form-content">
+                <input type="text" [(ngModel)]="careReceiverData.str_careReceiver">
+            </div>
+        </div>
+        <div class="button-row">
+            <app-button label="削除" color="remove" size="medium" class="table-button" (click)="remove(data.id)">
+            </app-button>
+            <app-button label="保存" color="save" size="medium" class="table-button" (click)="save(data.id)"></app-button>
+            <app-button label="戻る" color="simple" size="medium" class="table-button" (click)="close()"></app-button>
+        </div>
+    </ng-container>
+</div>
+
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

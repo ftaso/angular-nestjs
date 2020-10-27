@@ -1,0 +1,29 @@
+<div class="table-area" [@dateChange]="state">
+    <div>
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>利用者名</th>
+                    <th>出欠</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let data of regularScheduleList; let i = index;">
+                    <td>
+                        <span style="width: 120px; display: inline-block">{{data.str_careReceiver}}</span>
+                    </td>
+                    <td>
+                        <div class="attendance-button" [ngClass]="{'not-selected':!data.id_regularSchedule}"
+                            (click)="attendance(data)">
+                            登録済
+                        </div>
+                        <div class="absence-button" [ngClass]="{'not-selected':data.id_regularSchedule}"
+                            (click)="absence(data)">
+                            未登録
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

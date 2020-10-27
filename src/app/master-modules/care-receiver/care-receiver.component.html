@@ -1,0 +1,28 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+<table>
+    <tr>
+        <th>利用者ID</th>
+        <th>氏名</th>
+        <th>
+            <app-button label="新規追加" color="save" size="small" class="table-button" (click)="regist()"></app-button>
+        </th>
+    </tr>
+    <ng-container *ngIf="careReceiverList; else nullStaffList">
+        <ng-container *ngFor="let careReceiver of careReceiverList">
+            <tr>
+                <td>{{careReceiver.id_careReceiver}}</td>
+                <td>{{careReceiver.str_careReceiver}}</td>
+                <td>
+                    <app-button label="編集" color="edit" size="small" class="table-button"
+                        (click)="edit(careReceiver.id_careReceiver)"></app-button>
+                    <app-button label="削除" color="remove" size="small" class="table-button"
+                        (click)="remove(careReceiver.id_careReceiver)"></app-button>
+                </td>
+            </tr>
+        </ng-container>
+    </ng-container>
+    <ng-template #nullStaffList>
+        データ読み込み中・・・
+    </ng-template>
+</table>

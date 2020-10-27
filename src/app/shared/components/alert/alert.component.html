@@ -1,0 +1,14 @@
+<div id="alert-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed'">
+    <div class="title">警告</div>
+    <div class="form-row">
+        <div class="form-content">
+            {{data.content}}
+        </div>
+    </div>
+    <div class="button-row">
+        <app-button label="はい" color="save" size="large" class="table-button" (click)="close('yes')"></app-button>
+        <app-button label="いいえ" color="remove" size="large" class="table-button" (click)="close('no')"></app-button>
+    </div>
+</div>
+
+<div id="overlay" [@openClose]="isOpen ? 'open' :'closed'"></div>

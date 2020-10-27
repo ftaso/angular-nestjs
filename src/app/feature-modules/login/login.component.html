@@ -1,0 +1,21 @@
+<div id="card">
+    <img src="../../../assets/images/ikoinoie.png" alt="いこいの家26">
+    <!-- <div id="card-title">
+       いこいの家２６
+    </div> -->
+    <div id="card-body">
+        <div id="card-row">
+            ログイン
+        </div>
+        <div id="card-row">
+            <input placeholder="アカウント名" name="accountName" [(ngModel)]="model.accountName">
+        </div>
+        <div id="card-row">
+            <input placeholder="パスワード" [type]="hide ? 'password' : 'text'" name="password" [(ngModel)]="model.password">
+            <i class="material-icons" id="calendarIcon" (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</i>
+        </div>
+        <div id="button-row">
+            <app-button label="ログイン" color="save" size="medium" class="table-button" (click)="onLogin()"></app-button>
+        </div>
+    </div>
+</div>

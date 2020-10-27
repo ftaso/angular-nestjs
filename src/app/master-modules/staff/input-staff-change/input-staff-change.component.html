@@ -1,0 +1,13 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="dialog-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div id="dialog-title"><i class="material-icons">edit</i> 入力者の切替</div>
+    <div id="staff-list-container">
+        <ng-container *ngFor="let staff of staffList">
+            <div id="staff-name" matRipple [ngClass]="{'selected':selectedStaffId == staff.id_staff}" 
+            [matRippleDisabled]="selectedStaffId == staff.id_staff" (click)="selectStaff(staff.id_staff)">{{staff.str_staffName}}</div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="closeModal()" [@openClose]="isOpen ? 'open' :'closed'"></div>

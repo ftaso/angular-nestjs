@@ -1,0 +1,33 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <ng-container *ngIf="type=='main'">
+            <div id="label">
+                主菜の食事量を10段階から選択してください。
+            </div>
+            <div id="button-group">
+                <ng-container *ngFor="let proportion of proportionList">
+                    <div class="menu-button" (click)="put(proportion)" [ngClass]="{'selected': putData.num_mainProportion == proportion}">
+                        {{proportion}}
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="type=='sub'">
+            <div id="label">
+                副菜の食事量を10段階から選択してください。
+            </div>
+            <div id="button-group">
+                <ng-container *ngFor="let proportion of proportionList">
+                    <div class="menu-button" (click)="put(proportion)" [ngClass]="{'selected': putData.num_subProportion == proportion}">
+                        {{proportion}}
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

@@ -1,0 +1,14 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+<div class="weekly-button-group">
+    <div matRipple class="week-change-button right-shadow" (click)="previousWeek()"><i class="material-icons" id="calendarIcon">keyboard_arrow_left</i></div>
+    <nav>
+        <ng-container *ngFor="let date of weekList">
+            <a matRipple class="date-button" [ngClass]="{'is-current':date==selectedDate}" (click)="changeDate(date)">{{date|jpDate}}</a>
+        </ng-container>
+        <div class="nav-underline"></div>
+    </nav>
+    <div matRipple class="week-change-button  left-shadow" (click)="nextWeek()"><i class="material-icons" id="calendarIcon">keyboard_arrow_right</i></div>
+</div>
+<div class="page-content">
+    <app-daily-attendance [date]="selectedDate" [careReceiverList]="careReceiverList"></app-daily-attendance>
+</div>

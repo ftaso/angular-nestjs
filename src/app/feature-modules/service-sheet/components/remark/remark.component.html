@@ -1,0 +1,58 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div class="remark-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>内容</th>
+                        <th>時刻</th>
+                        <th>備考</th>
+                        <th>コピー</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let remarks of remarkList;">
+                        <ng-container *ngFor="let remark of remarks.remark; let i = index">
+                            <ng-container *ngIf="!i">
+                                <tr>
+                                    <td [rowSpan]="remarks.remark.length">{{remarks.type | recordTypeJp}}</td>
+                                    <td [rowSpan]="remarks.remark.length">{{remarks.time | timeHHmm}}</td>
+                                    <td>{{remark}}</td>
+                                    <td>
+                                        <app-icon-button class="app-icon-button" icon="save_alt" size="medium"
+                                            color="save" (click)="copy(remark)"></app-icon-button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="i">
+                                <tr>
+                                    <td class="display-none">{{remarks.type | recordTypeJp}}</td>
+                                    <td class="display-none">{{remarks.time | timeHHmm}}</td>
+                                    <td>{{remark}}</td>
+                                    <td>
+                                        <app-icon-button class="app-icon-button" icon="save_alt" size="medium"
+                                            color="save" (click)="copy(remark)"></app-icon-button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-container">
+            <div id="label">
+                {{remarkType}}
+            </div>
+            <div id="button-group">
+                <textarea class="remark" name="remark" rows="10" cols="40" type="text" [(ngModel)]="remark"></textarea>
+            </div>
+        </div>
+        <div class="add-button" (click)="put()">保存</div>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

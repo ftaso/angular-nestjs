@@ -1,0 +1,2 @@
+service: develop # developのときはコメントアウト外す
+runtime: nodejs12

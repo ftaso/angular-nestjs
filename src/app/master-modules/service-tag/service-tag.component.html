@@ -1,0 +1,43 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+<div class="page-content">
+    <div class="button-area">
+        <app-button label="サービスタグ編集" color="save" size="small" class="table-button" (click)="edit()"></app-button>
+    </div>
+
+    <div class="table-area">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th [colSpan]="1">カテゴリ</th>
+                    <th [colSpan]="1">サブカテゴリ</th>
+                    <th [colSpan]="1">サービスタグ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="serviceTagList; else nullStaffList">
+                    <ng-container *ngFor="let serviceTag of serviceTagList; let i = index;">
+                        <tr>
+                            <td class="category-name" [rowSpan]="serviceTag.categoryRowSpan"
+                                [ngClass]="{'display':serviceTag.categoryDisplay, 'no-display':!serviceTag.categoryDisplay}">
+                                {{serviceTag.str_serviceTagCategory}}
+                            </td>
+                            <td class="category-name" [rowSpan]="serviceTag.subCategoryRowSpan"
+                                [ngClass]="{'display':serviceTag.subCategoryDisplay, 'no-display':!serviceTag.subCategoryDisplay}">
+                                {{serviceTag.str_serviceTagSubCategory}}
+                            </td>
+                            <td class="category-name">
+                                <ng-container *ngIf="serviceTag.is_delete == 0 || !serviceTag.is_delete">
+                                    {{serviceTag.str_serviceTag}}
+                                </ng-container>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </ng-container>
+                <ng-template #nullStaffList>
+                    データ読み込み中・・・
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</div>

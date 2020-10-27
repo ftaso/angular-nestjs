@@ -1,0 +1,131 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div class="form-container">
+            <div id="label-title">提供を行ったサービスを選択してください。</div>
+            <div id="button-group">
+                <ng-container *ngFor="let serviceType of serviceDetailList">
+                    <div class="menu-button" matRipple
+                        [ngClass]="{'selected': selectedService.id_serviceType == serviceType.id_serviceType}"
+                        (click)="selectServiceType(serviceType)">
+                        {{serviceType.str_serviceType}}
+                    </div>
+                </ng-container>
+            </div>
+            <div id="label" class="gray">
+                <ng-container *ngIf="!isAddServiceType">
+                    <app-label-icon-button text="新しくサービスの種類を追加する" icon="add" color="simple" size="normal"
+                        (click)="openToggle('type')">
+                    </app-label-icon-button>
+                </ng-container>
+                <ng-container *ngIf="isAddServiceType">
+                    <app-label-icon-button text="新しくサービスの種類を追加する" icon="keyboard_arrow_up" color="simple" size="normal"
+                        (click)="closeToggle()">
+                    </app-label-icon-button>
+                    <div class="text-register">
+                        <ng-container *ngIf="isAddServiceType">
+                            <app-text-register placeholder="新しく追加するサービスの種類" [(value)]="newServiceType" (registText)="postNewServiceType($event)"></app-text-register>
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <span class="detail">
+            <ng-container *ngIf="selectedService.id_serviceType">
+                <div class="form-container">
+                    <div id="label-title">{{selectedService.str_serviceType}}について、サービスの詳細を選択してください。(複数選択可)</div>
+                    <div id="button-group">
+                        <ng-container *ngFor="let serviceDetail of selectedService.serviceDetails">
+                            <div class="menu-button" [ngClass]="{'selected': serviceDetail.select}"
+                                (click)="selectServiceDetail(serviceDetail)"  matRipple>
+                                {{serviceDetail.str_serviceDetail}}
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div id="label" class="gray">
+                        <ng-container *ngIf="!isAddServiceDetail">
+                            <app-label-icon-button [text]="selectedService.str_serviceType + 'にサービスの詳細を追加する'" icon="add"
+                                color="simple" size="normal" (click)="openToggle('detail')">
+                            </app-label-icon-button>
+                        </ng-container>
+                        <ng-container *ngIf="isAddServiceDetail">
+                            <app-label-icon-button [text]="selectedService.str_serviceType + 'にサービスの詳細を追加する'"
+                                icon="keyboard_arrow_up" color="simple" size="normal" (click)="closeToggle()">
+                            </app-label-icon-button>
+                            <div class="text-register">
+                                <ng-container *ngIf="isAddServiceDetail">
+                                    <app-text-register [placeholder]="selectedService.str_serviceType+'の詳細'" [value]="newServiceDetail" (registText)="postNewServiceDetail($event)">
+                                    </app-text-register>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </ng-container>
+        </span>
+        <div class="form-container">
+            <div id="label-title">
+                提供を行ったサービスの開始時刻・終了時刻
+            </div>
+            <div class="time-container">
+                <div class="time-input">
+                    <div id="label">
+                        開始時刻
+                    </div>
+                    <div id="time">
+                        {{putData.tm_start|timeHHmm}}
+                    </div>
+                </div>
+                <div class="time-input">
+                    <div id="label">
+                        終了時刻
+                    </div>
+                    <div id="time">
+                        {{putData.tm_end|timeHHmm}}
+                    </div>
+                </div>
+            </div>
+            <div class="form-container">
+                <div id="label" class="gray">
+                    <ng-container *ngIf="!isChangeTime">
+                        <app-label-icon-button text="開始時刻・終了時刻を変更する" icon="add" color="simple" size="normal"
+                            (click)="openToggle('time')">
+                        </app-label-icon-button>
+                    </ng-container>
+                    <ng-container *ngIf="isChangeTime">
+                        <app-label-icon-button text="開始時刻・終了時刻を変更する" icon="keyboard_arrow_up" color="simple"
+                            size="normal" (click)="closeToggle()">
+                        </app-label-icon-button>
+                        <div class="time-container">
+                            <app-time-picker [className]="'startTimePicker'" [setTime]="putData.tm_start"
+                                (pickerTime)="input($event, 'start')" [timeInterval]="timeInterval">
+                            </app-time-picker>
+                            <app-time-picker [className]="'endTimePicker'" [setTime]="putData.tm_end"
+                                (pickerTime)="input($event, 'end')" [timeInterval]="timeInterval">
+                            </app-time-picker>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="form-container">
+            <div id="label-title">
+                備考欄
+            </div>
+            <div id="button-group">
+                <textarea class="remark" name="remark" rows="4" cols="40" type="text"
+                    [(ngModel)]="putData.str_remark" (focus)="closeToggle()"></textarea>
+            </div>
+        </div>
+        <div id="action-button-group" class="reverce">
+            <div class="add-button" [ngClass]="{'cannot-post': selectedService.id_serviceType == 0}" (click)="post()">保存</div>
+            <ng-container *ngIf="putData.id_service">
+                <div class="remove-button" (click)="delete()">削除</div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

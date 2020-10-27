@@ -1,0 +1,109 @@
+
+@media screen and (orientation: landscape) {
+    /* 横向きの場合のスタイル */
+    .page-content {
+        overflow: scroll;
+        height: 677px;// 50 + 40 + 51
+    }
+ }
+ @media screen and (orientation: portrait) {
+    /* 縦向きの場合のスタイル */
+    .page-content {
+        overflow: scroll;
+        height: 933px;// 50 + 40 + 51
+    }
+ }
+
+ table {
+  margin: 10px auto;
+}
+
+th, td {
+  padding: 0.3rem 0.75rem;
+  font-size: 1rem;
+  text-align: center;
+}
+
+th {
+  background-color: #555;
+  color: #FFF;
+  padding: 0.5rem 0.75rem;
+  font-weight: 500;
+}
+
+td {
+background: #f7f7f7;
+}
+
+tr:nth-child(odd) td {
+background: #fff;
+}
+
+.table-button {
+  margin: 0 5px;
+}
+
+
+.display {
+   display: table-cell;
+}
+
+.no-display {
+  display: none;
+}
+
+.category-name {
+  min-width: 200px;
+}
+
+.button-area {
+  width: 600px;
+  margin: 0 auto;
+  text-align: end;
+}
+
+.staff-name-label {
+  font-size: 1.2rem;
+  line-height: 2.4;
+}
+
+.staff-name-field {
+  font-size: 1.2rem;
+  line-height: 2.4;
+  background-color: #FFF;
+  padding: 5px 10px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+
+.attendance-button {
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 3px;
+  background-color: rgb(60, 129, 75);
+  color: #FFF;
+ }
+ 
+ .absence-button {
+     display: inline-block;
+     padding: 10px 15px;
+ border-radius: 3px;
+ background-color: rgb(129, 60, 60);
+ color: #FFF;
+}
+
+.not-selected {
+ background-color: #EEE;
+ color: #CCC;
+}
+
+.remark {
+  color: #333;
+  font-size: 0.8rem;
+  background-color: #FFF;
+  padding: 5px 10px;
+  width: 80%;
+  margin: 5px auto;
+  border-radius: 5px;
+}

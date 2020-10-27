@@ -1,0 +1,44 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+<!-- 本日のデータを表示 -->
+<div class="page-content">
+    <div class="button-area">
+        <div id="menu-toggle" (click)="menuToggle()">
+            <div id="icon-box">
+                <div class="icon-box-row">入力</div>
+                <div class="icon-box-row"><i class="material-icons" id="account-icon">edit</i></div>              
+            </div>
+            <div id="account-name">{{staffId | staffName}}</div>
+        </div>
+    </div>
+
+    <div class="table-area">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>利用者名</th>
+                    <ng-container *ngFor="let time of timeTable">
+                        <th>{{time.time | timeHHmm}}</th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let record of excretionList">
+                    <tr>
+                        <th>{{record.careReceiver.str_careReceiver}} 様</th>
+                        <ng-container *ngFor="let timeData of record.time">
+                            <td (click)="openDialog(record, timeData.time,timeData.excretions)">
+                                <ng-container *ngFor="let excretion of timeData.excretions">
+                                    {{excretion.str_excretionState}}
+                                </ng-container>
+                                <ng-container *ngIf="timeData.remark">
+                                    <i class="material-icons" id="infoIcon">info</i>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>

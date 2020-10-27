@@ -1,0 +1,42 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{this.data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <!-- モードを切り替える機能 -->
+        <div id="label">
+            {{putData.tm_hydrate|timeHHmm}} ～ {{putData.tm_hydrate|timeHHmm:20}} の回収量を選択してください。
+        </div>
+        <ng-container *ngIf="!isComment">
+            <div class="toggle-button" (click)="isComment = true">特記事項あり</div>
+        </ng-container>
+        <ng-container *ngIf="isComment">
+            <div class="toggle-button" (click)="isComment = false">特記事項なし</div>
+        </ng-container>
+        <div id="button-group">
+            <ng-container *ngFor="let amount of numHydrateList">
+                <ng-container *ngIf="!isComment">
+                    <div matRipple class="menu-button" (click)="post(amount)"
+                        [ngClass]="{'selected': putData.num_hydrate == amount}">
+                        {{amount|numHydrate}}
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isComment">
+                    <div matRipple class="menu-button" (click)="selectAmount(amount)"
+                    [ngClass]="{'selected': putData.num_hydrate == amount}">
+                    {{amount|numHydrate}}
+                </div>
+                </ng-container>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="isComment">
+            <div class="comment-area">
+                <div class="label">コメント</div>
+                <textarea class="remark" name="remark" rows="4" cols="20" type="text" [(ngModel)]="remark"></textarea>
+                <div class="add-button" (click)="save()">保存</div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

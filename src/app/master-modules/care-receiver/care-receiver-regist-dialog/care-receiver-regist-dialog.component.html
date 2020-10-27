@@ -1,0 +1,16 @@
+<div id="regist-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed'">
+    <!-- この中では利用者リストのデータから、ダイアログを開く前に渡されたIDのみを表示する -->
+    <div class="title">新規登録</div>
+    <div class="form-row">
+        <div class="form-label">利用者氏名</div>
+        <div class="form-content">
+            <input type="text" [(ngModel)]="newCareReceiver">
+        </div>
+    </div>
+    <div class="button-row">
+        <app-button label="保存" color="save" size="medium" class="table-button" (click)="save()"></app-button>
+        <app-button label="戻る" color="simple" size="medium" class="table-button" (click)="close()"></app-button>
+    </div>
+</div>
+
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

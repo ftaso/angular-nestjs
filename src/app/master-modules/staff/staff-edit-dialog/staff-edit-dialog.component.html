@@ -1,0 +1,70 @@
+<div id="edit-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed'">
+    <!-- この中ではスタッフリストのデータから、ダイアログを開く前に渡されたIDのみを表示する -->
+    <ng-container *ngIf="(staffData | async) | selectedStaff:data.id as staffData">
+        <div class="title">編集</div>
+        <div class="form-row">
+            <div class="form-label">スタッフ氏名</div>
+            <div class="form-content">
+                <input type="text" [(ngModel)]="staffData.str_staffName">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">アカウント名</div>
+            <div class="form-content">
+                <input type="text" [(ngModel)]="staffData.str_accountName">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-label">パスワード</div>
+            <ng-container *ngIf="!passwordSettingForm">
+                <div class="expansion" (click)="passwordSettingForm= !passwordSettingForm">再設定する</div>
+            </ng-container>
+            <ng-container *ngIf="passwordSettingForm">
+                <div class="expansion" (click)="passwordSettingForm= !passwordSettingForm">閉じる</div>
+                <label class="input-label" for="newPassword">新しいパスワードを入力してください。</label>
+                <div class="form-content">
+                    <input [type]="newPasswordHide ? 'password' : 'text'" id="newPassword" [(ngModel)]="newPassword">
+                    <i class="material-icons" id="calendarIcon"
+                        (click)="newPasswordHide= !newPasswordHide">{{newPasswordHide? 'visibility_off' : 'visibility'}}</i>
+                </div>
+                <label class="input-label" for="confirmPassword">確認のためにもう一度パスワードを入力してください。</label>
+                <div class="form-content">
+                    <input [type]="confirmPasswordHide ? 'password' : 'text'" id="confirmPassword"
+                        [(ngModel)]="confirmPassword">
+                    <i class="material-icons" id="calendarIcon"
+                        (click)="confirmPasswordHide = !confirmPasswordHide">{{confirmPasswordHide ? 'visibility_off' : 'visibility'}}</i>
+                </div>
+            </ng-container>
+        </div>
+        <div class="form-row">
+            <div class="form-label">管理者権限</div>
+            <div class="form-button-group">
+                <div class="form-button" [ngClass]="{'on': staffData.is_administrator === 1}"
+                    (click)="staffData.is_administrator = 1">管理者権限あり</div>
+                <div class="form-button" [ngClass]="{'on': staffData.is_administrator === 0}"
+                    (click)="staffData.is_administrator = 0">管理者権限なし</div>
+            </div>
+        </div>
+        <ng-container *ngIf="developerMode">
+            <div class="form-row">
+                <div class="form-label">開発者権限</div>
+                <div class="form-button-group">
+                    <div class="form-button" [ngClass]="{'on': staffData.is_developer === 1}"
+                        (click)="staffData.is_developer = 1">開発者権限あり</div>
+                    <div class="form-button" [ngClass]="{'on': staffData.is_developer === 0}"
+                        (click)="staffData.is_developer = 0">開発者権限なし</div>
+                </div>
+            </div>
+        </ng-container>
+        <div class="button-row">
+            <ng-container *ngIf="staffData.id_staff!=myId">
+                <app-button label="削除" color="remove" size="medium" class="table-button" (click)="remove(data.id)">
+                </app-button>
+            </ng-container>
+            <app-button label="保存" color="save" size="medium" class="table-button" (click)="save(data.id)"></app-button>
+            <app-button label="戻る" color="simple" size="medium" class="table-button" (click)="close()"></app-button>
+        </div>
+    </ng-container>
+</div>
+
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

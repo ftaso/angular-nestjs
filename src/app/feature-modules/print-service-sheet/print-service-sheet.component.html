@@ -1,0 +1,218 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+<div class="find-bar">
+    <mat-form-field appearance="legacy" class="date-form">
+        <mat-label>日付選択</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="selectedDate" (dateChange)="onDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker touchUi #picker></mat-datepicker>
+    </mat-form-field>
+</div>
+
+<div id="guide-portrait">
+    <div id="left-content">
+        <div>
+            <ng-container *ngIf="selectedDateRecordList.length == 0">
+                <mat-option disabled>本日のレコードはありません</mat-option>
+            </ng-container>
+            <ng-container *ngIf="selectedDateRecordList.length">
+                <table class="sticky-table">
+                    <thead>
+                        <tr>
+                            <th>利用者名</th>
+                            <th>印刷</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let record of selectedDateRecordList; let i = index;">
+                            <td>
+                                <span
+                                    style="width: 120px; display: inline-block">{{record.careReceiver.str_careReceiver}}</span>
+                            </td>
+                            <td>
+                                <app-button label="プレビュー" color="edit" size="small" class="table-button"
+                                (click)="preview(record)"></app-button>
+                                <app-button label="印刷" color="save" size="small" class="table-button"
+                                    (click)="print()"></app-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-container>
+        </div>
+    </div>
+    <div id="right-content">
+        <ng-container *ngIf="selectedRecord">
+            <div id="service-sheet">
+                <div id="service-sheet-title">
+                    {{selectedRecord.dt_record | jpDate}}&nbsp;{{selectedRecord.careReceiver.str_careReceiver}}&nbsp;様&nbsp;&nbsp;サービス提供記録表
+                </div>
+                <div id="content">
+                    <div id="left-side-content">
+                        <div id="time-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>レク・リハ・入浴</th>
+                                        <th class="fit">水分</th>
+                                        <th class="fit">排泄</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let data of serviceTimeTable; let time = index;">
+                                        <tr>
+                                            <td class="time-column">{{data.time | timeHHmm}}</td>
+                                            <td [rowSpan]="data.rowSpan" [ngClass]="{'display-none': !data.display}"
+                                                (click)="openTimeFixedServiceDialog(data.time,data.timeFixedService)">
+                                                <ng-container *ngIf="data.timeFixedService">
+                                                    {{data.timeFixedService.str_service}}
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="data.hydration">
+                                                    {{data.hydration}}ml
+                                                </ng-container>
+                                            </td>
+                                            <td>
+                                                <ng-container *ngIf="data.excretion.length > 0">
+                                                    <ng-container *ngFor="let state of data.excretion">{{state}}</ng-container>
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            水分総摂取量：{{totalHydration}}ml
+                        </div>
+                        <div class="vital-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="time-column"></th>
+                                        <th class="fit" id="num_bodyTemperature">体温<br><span class="unit">[ ℃ ]</span></th>
+                                        <th class="fit" id="str_bloodPressure">最高/最低血圧<br><span class="unit">[ mmHg ]</span>
+                                        </th>
+                                        <th class="fit" id="num_pulse">脈拍<br><span class="unit">[ bpm ]</span></th>
+                                        <th class="fit" id="num_SpO2">SpO2<br>
+                                            <spna class="unit">[ % ]</spna>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="recordData">
+                                        <ng-container *ngFor="let data of recordData.vitals; let time = index;">
+                                            <tr>
+                                                <td class="time"><span *ngIf="data.tm_check">{{data.tm_check | timeHHmm}}</span>
+                                                </td>
+                                                <td><span *ngIf="data.num_bodyTemperature">{{data.num_bodyTemperature}}</span>
+                                                </td>
+                                                <td><span
+                                                        *ngIf="data.num_maximalBloodPressure && data.num_minimalBloodPressure">{{data.num_maximalBloodPressure}}
+                                                        / {{data.num_minimalBloodPressure}}</span></td>
+                                                <td><span *ngIf="data.num_pulse">{{data.num_pulse}}</span></td>
+                                                <td><span *ngIf="data.num_SpO2">{{data.num_SpO2}}</span></td>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="meal-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>食事</th>
+                                        <th class="fit">主菜食事量</th>
+                                        <th class="fit">副菜食事量</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="recordData">
+                                        <ng-container *ngFor="let data of recordData.meals; let time = index;">
+                                            <tr>
+                                                <ng-container *ngIf="data.str_mealType != '間食'">
+                                                    <td (click)="selectMealType(data)">
+                                                        <span>{{data.str_mealType}}</span></td>
+                                                    <td (click)="selectProportion(data, 'main')">
+                                                        <span
+                                                            *ngIf="data.num_mainProportion && (data.num_mainProportion != 0)">{{data.num_mainProportion}}</span>
+                                                    </td>
+                                                    <td (click)="selectProportion(data, 'sub')">
+                                                        <span
+                                                            *ngIf="data.num_subProportion && (data.num_subProportion != 0)">{{data.num_subProportion}}</span>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container *ngIf="data.str_mealType == '間食'">
+                                                    <td>{{data.str_mealType}}</td>
+                                                    <td>{{data.num_mainProportion}}</td>
+                                                    <td></td>
+                                                </ng-container>
+                                            </tr>
+                                        </ng-container>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="center-content"></div>
+                    <div id="right-side-content">
+                        <div class="service-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="category-row fit"></th>
+                                        <th>サービス</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngFor="let serviceTagCategory of serviceTagList; let i = index;">
+                                        <tr>
+                                            <td class="category-row"><span
+                                                    class="category-name">{{serviceTagCategory.str_serviceTagCategory}}</span>
+                                            </td>
+                                            <td class="service-tag-row">
+                                                <ng-container
+                                                    *ngFor="let serviceTagSubCategory of serviceTagCategory.serviceTagSubCategorys">
+                                                    <div class="service-tag-box">
+                                                        <div class="sub-category-name">
+                                                            {{serviceTagSubCategory.str_serviceTagSubCategory}}</div>
+                                                        <ng-container
+                                                            *ngFor="let serviceTag of serviceTagSubCategory.serviceTags">
+                                                            <div>
+                                                                {{serviceTag.str_serviceTag}}
+                                                                <mat-checkbox class="check-box" [(ngModel)]="serviceTag.check"
+                                                                    (change)="serviceTagCheck(serviceTag)"></mat-checkbox>
+                                                            </div>
+                                                        </ng-container>
+                                                    </div>
+                                                </ng-container>
+                                            </td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                        <ng-container *ngIf="recordData">
+                            <div class="remark-box">
+                                <div class="remark-title">本日の様子</div>
+                                <div class="remark-area" (click)="openRemarkDialog('report')">
+                                    <ng-container *ngIf="recordData.handingOvers">
+                                        {{recordData.handingOvers[0].str_report}}
+                                    </ng-container>
+                                </div>
+                            </div>
+                            <div class="remark-box">
+                                <div class="remark-title">特記事項</div>
+                                <div class="remark-area" (click)="openRemarkDialog('note')">
+                                    <ng-container *ngIf="recordData.handingOvers">
+                                        {{recordData.handingOvers[0].str_note}}
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

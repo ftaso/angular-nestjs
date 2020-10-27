@@ -1,0 +1,95 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+<!-- フォームフィールドが必要 -->
+<!-- 本日のデータを表示 -->
+<div class="page-content">
+    <div id="menu-toggle" (click)="menuToggle()">
+        <div id="icon-box">
+            <div class="icon-box-row">入力</div>
+            <div class="icon-box-row"><i class="material-icons" id="account-icon">edit</i></div>
+        </div>
+        <div id="account-name">{{staffId | staffName}}</div>
+    </div>
+
+    <div class="table-area">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>利用者名</th>
+                    <th>追加</th>
+                    <th>食事</th>
+                    <th>主菜<br>食事量</th>
+                    <th>副菜<br>食事量</th>
+                    <th>備考</th>
+                    <th>記入者</th>
+                    <th>削除</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let record of mealList">
+                    <!-- 食事データがない場合 -->
+                    <ng-container *ngIf="record.meals.length == 0">
+                        <tr>
+                            <td>
+                                <span
+                                    style="width: 120px; display: inline-block">{{record.careReceiver.str_careReceiver}}</span>
+                            </td>
+                            <td>
+                                <app-icon-button class="app-icon-button ml" icon="fastfood" size="table-meal" color="save"
+                                    (click)="addSnack(record.id_record)">
+                                </app-icon-button>
+                                <app-icon-button class="app-icon-button mr" icon="add" size="table-meal" color="edit"
+                                    (click)="addMeal(record, meal)"></app-icon-button>
+                            </td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr> 
+                    </ng-container>
+                    <tr *ngFor="let meal of record.meals; let i = index;">
+                        <td [rowSpan]="record.meals.length" [ngClass]="{'display':i==0, 'no-display':i!=0}">
+                            <span
+                                style="width: 120px; display: inline-block">{{record.careReceiver.str_careReceiver}}</span>
+                        </td>
+                        <td [rowSpan]="record.meals.length" [ngClass]="{'display':i==0, 'no-display':i!=0}">
+                            <app-icon-button class="app-icon-button ml" icon="fastfood" size="table-meal" color="save"
+                                (click)="addSnack(record.id_record)">
+                            </app-icon-button>
+                            <app-icon-button class="app-icon-button mr" icon="add" size="table-meal" color="edit"
+                                (click)="addMeal(record, meal)"></app-icon-button>
+                        </td>
+                        <ng-container *ngIf="meal.str_mealType != '間食'">
+                            <td (click)="selectMealType(record, meal)">
+                                <span>{{meal.str_mealType}}</span></td>
+                            <td (click)="selectProportion(record, meal, 'main')">
+                                <span
+                                    *ngIf="meal.num_mainProportion && (meal.num_mainProportion != 0)">{{meal.num_mainProportion}}</span>
+                            </td>
+                            <td (click)="selectProportion(record, meal, 'sub')">
+                                <span
+                                    *ngIf="meal.num_subProportion && (meal.num_subProportion != 0)">{{meal.num_subProportion}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container *ngIf="meal.str_mealType == '間食'">
+                            <td>{{meal.str_mealType}}</td>
+                            <td>{{meal.num_mainProportion}}</td>
+                            <td></td>
+                        </ng-container>
+                        <td (click)="editRemark(record,meal)">
+                            <span *ngIf="meal.str_remark">{{meal.str_remark}}</span></td>
+                        <td>
+                            <span *ngIf="meal.id_fillOutStaff">{{meal.id_fillOutStaff | staffName}}</span></td>
+                        <td>
+                            <ng-container *ngIf="meal.id_meal">
+                                <app-icon-button class="app-icon-button" icon="remove" size="table-small" color="remove"
+                                    (click)="remove((meal.id_meal))"></app-icon-button>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>

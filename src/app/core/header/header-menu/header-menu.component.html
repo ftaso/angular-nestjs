@@ -1,0 +1,15 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="header-menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div id="menu-button" (click)="changeAccountName()" [ngClass]="{'button-selected': selectedAccountName}">
+        <i class="material-icons">person</i>アカウント名変更
+    </div>
+    <div id="menu-button" (click)="changePassword()" [ngClass]="{'button-selected': selectedPassword}">
+        <i class="material-icons">vpn_key</i>パスワード変更
+    </div>
+    <div id="menu-button" (click)="logout()">
+        <i class="material-icons">exit_to_app</i>ログアウト
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="closeModal()" [@openClose]="isOpen ? 'open' :'closed'"></div>

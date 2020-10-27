@@ -1,0 +1,49 @@
+#body-fixed {
+    width: 100%;
+    height: 100%;
+}
+
+#body {
+    padding-top: 50px;
+    height: 100%;
+}
+
+.page {
+    flex: 1;
+    background-color: #EEE;
+    overflow-x: scroll;
+}
+
+.login-page {
+    flex: 1;
+    background: linear-gradient(to top, rgb(239, 255, 238), #FFF);
+}
+
+.no-side-nav {
+    display: none;
+    transition: 1s;
+}
+
+@media screen and (orientation: landscape) {
+    /* 横向きの場合のスタイル */
+    #body {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #footer {
+        display:none;
+    }
+ }
+ 
+ @media screen and (orientation: portrait) {
+    /* 縦向きの場合のスタイル */
+    #body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #side-nav {
+        display:none;
+    }
+ }

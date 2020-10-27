@@ -1,0 +1,26 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div class="form-container" (click)="changeInputType('max')">
+            <span id="name">{{displayName}}</span>
+            <span id="number" [ngClass]="{'inputting':inputType== 'max'}" >&nbsp;{{displayNumber}}&nbsp;</span>
+            <span id="suffix">{{suffix}}</span>
+        </div>
+        <ng-container *ngIf="inputType">
+            <div class="form-container" (click)="changeInputType('min')">
+                <span id="name">最低血圧</span>
+                <span id="number" [ngClass]="{'inputting':inputType== 'min'}">{{secondDisplayNumber}}&nbsp;</span>
+                <span id="suffix">mmHg</span>
+            </div>
+        </ng-container>
+        <app-number-inputer (pushedButton)="pushedButton($event)" (inputNumber)="input($event)"></app-number-inputer>
+        <div class="button-group">
+            <div class="remove-button" (click)="clear()">クリア</div>
+            <div class="add-button" (click)="put()">保存</div>
+        </div>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

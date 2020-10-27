@@ -1,0 +1,41 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+<div class="page-content">
+    <div class="remark">
+        利用者の出席予定の曜日に〇をつけてください。（〇がついている曜日は、出席予定として扱います。）<br>
+        指定する日の、出席・欠席の設定は、"出席"から入力ください。
+    </div>
+    <div class="table-area">
+        <div>
+            <table class="sticky-table">
+                <thead>
+                    <tr>
+                        <th>利用者名</th>
+                        <ng-container *ngFor="let day of weekList">
+                            <th>{{day}}</th>
+                        </ng-container>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of regularScheduleList; let i = index;">
+                        <td>
+                            <span style="width: 120px; display: inline-block">{{data.str_careReceiver}}&nbsp;様</span>
+                        </td>
+                        <ng-container *ngFor="let dayData of data.dayData; let dayIndex = index">
+                            <ng-container *ngIf="dayData.id_regularSchedule">
+                                <td>
+                                    <div class="attendance-button"  (click)="absence(dayData)">
+                                        〇
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container *ngIf="!dayData.id_regularSchedule">
+                                <td (click)="attendance(data, dayIndex)">
+                                </td>
+                            </ng-container>
+                        </ng-container>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

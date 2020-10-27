@@ -1,0 +1,13 @@
+.picker-container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.js-time-picker {
+    visibility: hidden;
+}
+
+::ng-deep .picker-picked {
+    font-size: 1.4rem!important;
+    color: rgb(55, 58, 214)!important;
+}

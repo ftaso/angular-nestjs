@@ -1,0 +1,20 @@
+<div [@sideNavInOut]="sideNav" id="side-nav">
+    <!-- ログイン情報から開発者・管理者の権限から表示するメニューを制御 -->
+    <ng-container *ngIf="state | async as tempState">
+        <ng-container *ngFor="let category of sideNavList; let i = index;">
+            <ng-container *ngIf="tempState.isDeveloper || tempState.isAdministrator || i != 0">
+                <div class="category">{{category.listCategory}}</div>
+            </ng-container>
+            <ng-container *ngFor="let navigation of category.navigationList">
+                <ng-container
+                    *ngIf="(tempState.isAdministrator&&navigation.constrain=='admin') || (tempState.isDeveloper&&navigation.constrain=='develop') || !navigation.constrain">
+                    <div class="navigation" (click)="navigate(navigation.path)"
+                        [ngClass]="{'selected':selectedPath == '/'+navigation.path}">
+                        <i class="material-icons" id="calendarIcon">{{navigation.icon}}</i>
+                        {{navigation.pageTitle}}
+                    </div>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </ng-container>
+</div>

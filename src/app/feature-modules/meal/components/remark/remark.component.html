@@ -1,0 +1,19 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div class="form-container">
+            <div id="label">
+                備考欄
+            </div>
+            <div id="button-group">
+                <textarea class="remark" name="remark" rows="4" cols="40" type="text"
+                    [(ngModel)]="putData.str_remark"></textarea>
+            </div>
+        </div>
+        <div class="add-button" (click)="put()">保存</div>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

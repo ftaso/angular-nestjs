@@ -1,0 +1,56 @@
+/* 自由にカスタム可能 */
+.pop-up {
+    top: 100px;
+    left: 50%;
+    width: 600px;
+    background: #ffc0cb;
+    margin-left: -300px;
+    text-align: center;
+    border-radius: 5px;
+ }
+
+ .ok-pop-up {
+   top: 100px;
+   left: 50%;
+   width: 600px;
+   background: #cfffc0;
+   margin-left: -300px;
+   text-align: center;
+   border-radius: 5px;
+}
+
+ .no-admin {
+   top: 100px;
+   left: 50%;
+   width: 600px;
+   background: #ffc0cb;
+   margin-left: -300px;
+   text-align: center;
+   border-radius: 5px;
+}
+
+ /*  モーダルウィンドウを実現するためのCSS */
+ #pop-up-container {
+    position:  fixed;
+    z-index: 100;
+    opacity: 0;
+ }
+
+ /*  モーダルウィンドウを実現するためのCSS */
+ #overlay {
+    position: absolute;
+    top: 0px;
+    left:  0px;
+    z-index:  99;
+    background:  rgba(0,0,0,0.2);
+    width:  100%;
+    height: 100%;
+    opacity: 0;
+ }
+
+ #pop-up-content {
+   padding: 10px;
+   font-size: 1rem;
+   font-weight: 600;
+   color: #333;
+ }

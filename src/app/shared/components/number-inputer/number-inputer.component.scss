@@ -1,0 +1,42 @@
+.number-inputer {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.number-button {
+    font-size: 2rem;
+    width: 120px;
+    text-align: center;
+    padding: 20px 30px;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.large-number-button {
+    font-size: 2rem;
+    width: 310px;
+    text-align: center;
+    padding: 20px 30px;
+    background-color: #FFF;
+    border-radius: 10px;
+    margin: 5px;
+}
+
+.clicked {
+    background-color: #EEE;
+}
+
+.number-button:hover, .large-number-button:hover {
+    background-color: #FFF;
+    transition: opacity 0.1s ease 0.5s;
+}
+
+.button-group {
+    display:flex;
+    justify-content:center;
+}
+
+input {
+    visibility: hidden;
+}

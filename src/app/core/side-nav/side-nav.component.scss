@@ -1,0 +1,30 @@
+#side-nav {
+    height: 100%;
+    box-sizing: border-box;
+    width: 190px;
+    padding-top: 15px;
+    box-shadow: inset -2px 0px 2px #777;
+}
+
+.navigation {
+    vertical-align: middle;
+    padding: 10px 10px 10px 15px;
+    white-space: nowrap;
+}
+
+.material-icons {
+    vertical-align: middle;
+    padding-right: 5px;
+}
+
+.selected {
+    color: rgb(43, 63, 155)
+}
+
+.category {
+    color: #777;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding-left: 10px;
+    white-space: nowrap;
+}

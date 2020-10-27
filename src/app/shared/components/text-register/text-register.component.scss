@@ -1,0 +1,17 @@
+input {
+    padding: 7px 10px;
+    margin: 0px 10px;
+    font-size: 1.2rem;
+    outline: none;
+    width: 300px;
+    box-sizing: border-box;
+    border: solid 1px #555;
+    border-radius: 5px;
+}
+
+input:focus {
+    /*フォーカスした時に影をつける*/
+    box-shadow: 0 5px 5px 0 rgb(29, 30, 112, 0.4);
+    /*フォーカスした時に枠線を太く濃く*/
+    border: solid 1px rgb(65, 68, 255);
+}

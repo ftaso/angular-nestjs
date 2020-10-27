@@ -1,0 +1,18 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div class="form-container">
+            <div id="label">
+                計測時刻入力
+            </div>
+            <!-- timepicker -->
+            <app-time-picker [className]="'timePicker'" [setTime]="putData.tm_check" (pickerTime)="input($event)" [timeInterval]="10">
+            </app-time-picker>
+        </div>
+
+        <div class="add-button" (click)="put()">保存</div>
+    </div>
+</div>
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

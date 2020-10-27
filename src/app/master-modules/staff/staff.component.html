@@ -1,0 +1,44 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+
+<table>
+    <tr>
+        <th>スタッフID</th>
+        <th>氏名</th>
+        <th>アカウント名</th>
+        <th>管理者権限</th>
+        <ng-container *ngIf="developerMode">
+            <th>
+                開発者権限
+            </th>
+        </ng-container>
+        <th>
+            <app-button label="新規追加" color="save" size="small" class="table-button" (click)="regist()"></app-button>
+        </th>
+    </tr>
+    <ng-container *ngIf="staffList; else nullStaffList">
+        <ng-container *ngFor="let staff of staffList">
+            <tr>
+                <td>{{staff['id_staff']}}</td>
+                <td>{{staff['str_staffName']}}</td>
+                <td>{{staff['str_accountName']}}</td>
+                <td>
+                    {{staff['is_administrator'] | booleanToCircle}}
+                </td>
+                <ng-container *ngIf="developerMode">
+                    <td>
+                        {{staff['is_developer'] | booleanToCircle}}
+                    </td>
+                </ng-container>
+                <td>
+                    <app-button label="編集" color="edit" size="small" class="table-button"
+                        (click)="edit(staff.id_staff)"></app-button>
+                    <!-- <app-button label="削除" color="remove" size="small" class="table-button" (click)="remove(staff.id_staff)"></app-button> -->
+                </td>
+            </tr>
+        </ng-container>
+    </ng-container>
+    <ng-template #nullStaffList>
+        データ読み込み中・・・
+    </ng-template>
+</table>

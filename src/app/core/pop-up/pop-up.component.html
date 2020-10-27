@@ -1,0 +1,5 @@
+<div id="pop-up-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div id="pop-up-content" [innerHtml]="data.contents"></div>
+</div>
+
+<div id="overlay" (click)="data.click(); closePopUp()" [@openClose]="isOpen ? 'open' :'closed'"></div>

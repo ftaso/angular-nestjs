@@ -1,0 +1,79 @@
+/* 自由にカスタム可能 */
+.meal-type{
+    top: 300px;
+    left: 50%;
+    background: #EEE;
+ }
+
+ /*  モーダルウィンドウを実現するためのCSS */
+ #menu-container {
+    position:  fixed;
+    z-index: 100;
+    opacity: 0;
+    padding: 10px;
+    margin: 0 -150px;
+    border-radius: 10px;
+ }
+
+ /*  モーダルウィンドウを実現するためのCSS */
+ #overlay {
+    position: fixed;
+    top: 0px;
+    left:  0px;
+    z-index:  99;
+    background:  rgba(0,0,0,0.5);
+    width:  100%;
+    height: 100%;
+    opacity: 0;
+ }
+
+ #menu-content {
+     padding: 10px;
+ }
+
+#label {
+    padding: 10px 20px;
+    font-size: 1rem;
+}
+
+#button-group {
+    display: flex;
+}
+
+.menu-button {
+    padding: 10px 20px;
+    width: 100px;
+    font-size: 1.2rem;
+    text-align: center;
+    border-radius: 5px;
+    background-color: #FFF;
+    margin: 0 10px;
+}
+
+
+.selected {
+    background-color: rgb(60, 129, 75);
+    font-weight: 600;
+    color: #FFF;
+}
+
+#suffix {
+    font-size: 1.8rem;
+}
+
+#suffix {
+    font-size: 1.8rem;
+}
+
+#title {
+    margin: 10px 0 ;
+    font-size: 1.8rem;
+    text-align: start;
+    height: 50px;
+    line-height: 1.5;
+}
+
+.dialog-container {
+    width: 90%;
+    margin: 0 auto 10px;
+}

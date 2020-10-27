@@ -1,0 +1,80 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+<!-- フォームフィールドが必要 -->
+<!-- 本日のデータを表示 -->
+<div class="page-content">
+    <div id="menu-toggle" (click)="menuToggle()">
+        <div id="icon-box">
+            <div class="icon-box-row">入力</div>
+            <div class="icon-box-row"><i class="material-icons" id="account-icon">edit</i></div>
+        </div>
+        <div id="account-name">{{staffId |staffName}}</div>
+    </div>
+
+    <div class="table-area">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th id="str_careReceiver">利用者名</th>
+                    <th id="tm_check">時刻</th>
+                    <th id="num_bodyTemperature">体温<br>[ ℃ ]</th>
+                    <th id="str_bloodPressure">最高/最低血圧<br>[ mmHg ]</th>
+                    <th id="num_pulse">脈拍<br>[ bpm ]</th>
+                    <th id="num_SpO2">SpO2<br>[ % ]</th>
+                    <th id="str_remark">備考</th>
+                    <th id="str_fillOutStaff">記入者</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let record of vitalList;">
+                    <tr *ngFor="let vital of record.vitals; let i = index;">
+                        <td [rowSpan]="record.vitals.length + 1" [ngClass]="{'display': i==0, 'no-display': i!=0}">
+                            <span
+                                style="width: 120px; display: inline-block">{{record.careReceiver.str_careReceiver}}</span>
+                        </td>
+                        <td class="time" (click)="openInputDialog(record,'tm_check')"><span
+                                *ngIf="vital.tm_check">{{vital.tm_check | timeHHmm}}</span>
+                        </td>
+                        <td (click)="openInputDialog(record,'num_bodyTemperature', vital)"><span
+                                *ngIf="vital.num_bodyTemperature">{{vital.num_bodyTemperature}}</span></td>
+                        <td (click)="openInputDialog(record, 'num_bloodPressure', vital)"><span
+                                *ngIf="vital.num_maximalBloodPressure && vital.num_minimalBloodPressure">{{vital.num_maximalBloodPressure}}
+                                / {{vital.num_minimalBloodPressure}}</span></td>
+                        <td (click)="openInputDialog(record, 'num_pulse', vital)"><span
+                                *ngIf="vital.num_pulse">{{vital.num_pulse}}
+                            </span></td>
+                        <td (click)="openInputDialog(record, 'num_SpO2', vital)"><span *ngIf="vital.num_SpO2">{{vital.num_SpO2}}
+                            </span></td>
+                        <td (click)="openInputDialog(record, 'str_remark', vital)"><span
+                                *ngIf="vital.str_remark">{{vital.str_remark}}</span></td>
+                        <td><span *ngIf="vital.id_fillOutStaff">{{vital.id_fillOutStaff | staffName}}</span></td>
+                        <td>
+                            <ng-container *ngIf="vital.id_vital">
+                                <app-icon-button class="app-icon-button" icon="remove" size="table-small" color="remove"
+                                    (click)="remove(vital.id_vital)"></app-icon-button>
+                            </ng-container>
+                        </td>
+                    </tr>
+                    <tr>
+                        <!-- <td></td> -->
+                        <td [ngClass]="{'display': !record.vitals.length, 'no-display': record.vitals.length}">
+                            <span style="width: 120px; display: inline-block">
+                                {{record.careReceiver.str_careReceiver}}
+                            </span>
+                        </td>
+                        <td class="time" (click)="openInputDialog(record,'tm_check')"></td>
+                        <td (click)="openInputDialog(record,'num_bodyTemperature')"></td>
+                        <td (click)="openInputDialog(record,'num_bloodPressure')"></td>
+                        <td (click)="openInputDialog(record,'num_pulse')"></td>
+                        <td (click)="openInputDialog(record,'num_SpO2')"></td>
+                        <td (click)="openInputDialog(record,'str_remark')"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+
+</div>

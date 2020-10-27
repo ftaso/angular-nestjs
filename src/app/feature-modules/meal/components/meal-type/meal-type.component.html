@@ -1,0 +1,17 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div id="label">食事タイプを選択してください。</div>
+        <div id="button-group">
+            <ng-container *ngFor="let meal of mealTypeList">
+                <div class="menu-button" (click)="put(meal)" [ngClass]="{'selected': putData.str_mealType == meal}">
+                    {{meal}}
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

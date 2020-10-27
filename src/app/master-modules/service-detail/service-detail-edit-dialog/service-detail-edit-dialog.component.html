@@ -1,0 +1,105 @@
+<div id="edit-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed'">
+    <!-- この中では利用者リストのデータから、ダイアログを開く前に渡されたIDのみを表示する -->
+    <div class="title">編集</div>
+    <div class="content">
+        <div class="sub-content">
+            <div class="sub-content-title">サービス種別</div>
+            <div class="scroll-area">
+                <ng-container *ngIf="serviceTagData | async as serviceTagData;">
+                    <ng-container *ngFor="let serviceType of serviceTagData; let i = index;">
+                        <ng-container *ngIf="ediTypeId != serviceType.id_serviceType">
+                            <div class="sub-content-row"
+                                [ngClass]="{'selected': serviceType.id_serviceType == selectedServiceType}"
+                                (click)="selectType(serviceType.id_serviceType)">
+                                <ng-container *ngIf="editTypeId != serviceType.id_serviceType">
+                                    <div class="view">{{serviceType.str_serviceType}}</div>
+                                    <app-button label="編集" color="edit" size="small" class="table-button"
+                                        (click)="editType(serviceType.id_serviceType)"></app-button>
+                                    <!-- id_serviceTagSubTypeがない時、削除ボタン出現 -->
+                                    <ng-container *ngIf="serviceType.serviceDetails.length == 0">
+                                        <app-button label="削除" color="remove" size="small" class="table-button"
+                                            (click)="deleteType(serviceType.id_serviceType)"></app-button>
+                                    </ng-container>
+                                </ng-container>
+                                <ng-container *ngIf="editTypeId == serviceType.id_serviceType">
+                                    <input type="text" [ngClass]="{'remove-button-input': !serviceType.id_serviceType}"
+                                        [(ngModel)]="serviceType.str_serviceType">
+                                    <app-button label="保存" color="save" size="small" class="table-button"
+                                        (click)="saveType(serviceType.id_serviceType)"></app-button>
+                                </ng-container>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!isNewType">
+                        <div class="sub-content-row no-background">
+                            <div class="edit-new" (click)="editNewType()">
+                                新規追加
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="isNewType">
+                        <div class="sub-content-row">
+                            <input type="text" [(ngModel)]="newTypeName">
+                            <app-button label="保存" color="save" size="small" class="table-button"
+                            (click)="saveNewType()"></app-button>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-content-title">サービス詳細</div>
+            <div class="scroll-area">
+                <ng-container *ngIf="serviceTagData | async as serviceTagData; else nullserviceTagList">
+                    <ng-container *ngFor="let serviceType of serviceTagData; let i = index;">
+                        <ng-container *ngIf="serviceType.id_serviceType == selectedServiceType">
+                            <ng-container *ngFor="let serviceDetail of serviceType.serviceDetails; let i = index;">
+                                <div class="sub-content-row">
+                                    <ng-container *ngIf="editDetailId != serviceDetail.id_serviceDetail">
+                                        <div class="view">{{serviceDetail.str_serviceDetail}}</div>
+                                        <app-button label="編集" color="edit" size="small" class="table-button"
+                                            (click)="editDetail(serviceDetail.id_serviceDetail)"></app-button>
+                                        <!-- id_serviceTagSubTypeがない時、削除ボタン出現 -->
+                                        <app-button label="削除" color="remove" size="small" class="table-button"
+                                            (click)="deleteDetail(serviceDetail.id_serviceDetail)"></app-button>
+                                    </ng-container>
+                                    <ng-container *ngIf="editDetailId == serviceDetail.id_serviceDetail">
+                                        <input type="text"
+                                            [ngClass]="{'remove-button-input': !serviceDetail.id_serviceDetail}"
+                                            [(ngModel)]="serviceDetail.str_serviceDetail">
+                                        <app-button label="保存" color="save" size="small" class="table-button"
+                                            (click)="saveDetail(serviceDetail.id_serviceTagDetail)"></app-button>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="!isNewDetail && selectedServiceType">
+                    <div class="sub-content-row no-background">
+                        <div class="edit-new" (click)="editNewDetail()">
+                            新規追加
+                        </div>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="isNewDetail && selectedServiceType">
+                    <div class="sub-content-row">
+                        <input type="text" [(ngModel)]="newDetailName">
+                        <app-button label="保存" color="save" size="small" class="table-button"
+                        (click)="saveNewDetail()"></app-button>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <ng-template #nullserviceTagList>
+        データ読み込み中・・・
+    </ng-template>
+
+
+    <div class="button-row">
+        <app-button label="戻る" color="simple" size="medium" class="table-button" (click)="close()"></app-button>
+    </div>
+</div>
+
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

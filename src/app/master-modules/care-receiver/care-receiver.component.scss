@@ -1,0 +1,28 @@
+table {
+    margin: 10px auto;
+}
+
+th, td {
+    padding: 0.3rem 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+th {
+    background-color: #555;
+    color: #FFF;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+}
+
+td {
+	background: #f7f7f7;
+}
+
+tr:nth-child(odd) td {
+	background: #fff;
+}
+
+.table-button {
+    margin: 0 5px;
+}

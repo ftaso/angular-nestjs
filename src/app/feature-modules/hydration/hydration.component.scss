@@ -1,0 +1,190 @@
+.table-area {
+    margin: 0px auto;
+    width: 95%;
+    display: block;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    overflow: scroll;
+}
+
+th, td {
+    padding: 0.3rem 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+}
+
+th {
+    background-color: #555;
+    color: #FFF;
+    padding: 0.5rem 0.75rem;
+    font-weight: 500;
+}
+
+
+td {
+	background: #f7f7f7;
+}
+
+tr:nth-child(odd) td {
+	background: #fff;
+}
+
+.table-button {
+    margin: 0 5px;
+}
+
+
+ .display {
+     display: table-cell;
+ }
+
+ .no-display {
+    display: none;
+}
+
+.category-name {
+    min-width: 200px;
+}
+
+.toggle-button {
+    width: 80px;
+    background-color: #FFF;
+    text-align: center;
+    font-size: 1.3rem;
+    height: 30px;
+    line-height: 1.5;
+    margin: 10px 5px;
+    border-radius: 5px;
+}
+
+.amount-button {
+    width: 60px;
+    background-color: #FFF;
+    text-align: center;
+    font-size: 1.1rem;
+    height: 30px;
+    line-height: 1.7;
+    margin: 10px 5px;
+    border-radius: 5px;
+}
+
+.button-area {
+    margin-left: 10px;
+    display: flex;
+}
+
+#menu-toggle {
+    position: absolute;
+    height: 44px;
+    margin: 2px 10px;
+    width: 146px;
+    right: 0;
+    display: flex;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px -1px #333;
+    background-color: rgb(60, 129, 75);
+
+}
+
+#menu-toggle:active {
+    box-shadow: 0 0 0 0 #333;
+    transform: translateY(3px);
+}
+
+#icon-box {
+    margin-top: 5px;
+    margin-left: 5px;
+
+    .icon-box-row {
+        margin-top: -3px;
+        color: #FFF;
+        font-size: 0.8rem;
+        text-align: center;
+    }
+
+}
+
+
+#account-name {
+    font-size: 1rem;
+    line-height: 2.2;
+    text-align: center;
+    flex: 1;
+    background-color: #FFF;
+    margin: 5px;
+    box-shadow: inset 0 0 1px #333;
+    border-radius: 2px;
+}
+
+
+
+@media screen and (orientation: landscape) {
+    /* 横向きの場合のスタイル */
+    .page-content {
+        overflow: scroll;
+        height: 678px;
+        width: 100%;
+    }
+ }
+ @media screen and (orientation: portrait) {
+    /* 縦向きの場合のスタイル */
+    .page-content {
+        overflow: scroll;
+        height: 934px;
+    }
+ }
+
+ .sticky-table thead th {
+    /* 縦スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    /* tbody内のセルより手前に表示する */
+    z-index: 1;
+}
+.sticky-table th:first-child {
+    /* 横スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+}
+.sticky-table thead th:first-child {
+    /* ヘッダー行内の他のセルより手前に表示する */
+    z-index: 2;
+}
+
+.distribute {
+    color: rgb(187, 49, 49);
+}
+
+.collect {
+}
+
+.distribute-selected {
+    color: #FFF;
+    background-color: rgb(129, 60, 60);
+}
+
+.collect-selected {
+    color: #FFF;
+    background-color: rgb(61, 60, 129);
+}
+
+.unvisible {
+    visibility: hidden;
+}
+
+.amount-selected {
+    color: #FFF;
+    background-color: rgb(101, 156, 219);
+}
+
+
+.collect {
+    .material-icons {
+        font-size: 18px;
+        vertical-align: top;
+        margin-right: -7px;
+        color: #555;
+    }
+}

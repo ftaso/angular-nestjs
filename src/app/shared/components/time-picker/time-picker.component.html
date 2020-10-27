@@ -1,0 +1,4 @@
+<!-- timepicker -->
+<input type="text" [ngClass]="className" class="js-time-picker" (change)="check($event.target.value)"
+  [(ngModel)]="time" readonly="true">
+<div [ngClass]="className+'-picker-container'"></div>

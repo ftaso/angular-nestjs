@@ -1,0 +1,46 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+<div class="page-content">
+    <div class="button-area">
+        <app-button label="サービス編集" color="save" size="small" class="table-button" (click)="edit()"></app-button>
+    </div>
+
+    <div class="table-area">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>サービス種別</th>
+                    <th>サービス詳細</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngIf="serviceTagList; else nullStaffList">
+                    <ng-container *ngFor="let serviceType of serviceTagList; let i = index;">
+                        <ng-container *ngIf="serviceType.serviceDetails.length == 0">
+                            <tr>
+                                <td class="category-name">
+                                    {{serviceType.str_serviceType}}
+                                </td>
+                                <td class="category-name"></td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngFor="let serviceDetail of serviceType.serviceDetails; let j = index;">
+                            <tr>
+                                <td class="category-name" [rowSpan]="serviceType.serviceDetails.length"
+                                    [ngClass]="{'display':j==0, 'no-display':j!=0}">
+                                    {{serviceType.str_serviceType}}
+                                </td>
+                                <td class="category-name">
+                                        {{serviceDetail.str_serviceDetail}}
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+                <ng-template #nullStaffList>
+                    データ読み込み中・・・
+                </ng-template>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="menu-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div class="dialog-container">
+        <div id="title">{{data.record.careReceiver.str_careReceiver}}<span id="suffix">&nbsp;様</span></div>
+        <div id="label">
+            {{data.time|timeHHmm}} ～ {{data.time|timeHHmm:20}}
+        </div>
+        <!-- モードを切り替える機能 -->
+        <div id="button-group">
+            <div class="mode-change-button" [ngClass]="{'selected': mode== 'input'}" (click)="change('input')">入力
+            </div>
+            <ng-container *ngIf="putDataList.length">
+                <div class="mode-change-button" [ngClass]="{'selected': mode== 'edit'}" (click)="change('edit')">
+                    編集
+                </div>
+            </ng-container>
+        </div>
+        <ng-container *ngIf="mode=='input'">
+            <div id="label">
+                排泄の種類を選択してください。
+            </div>
+            <div id="button-group">
+                <ng-container *ngFor="let state of stateList">
+                    <div matRipple class="menu-button" (click)="post(state)"
+                        [ngClass]="{'selected': putData.str_excretionState == state}">
+                        {{state}}
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="mode=='edit'">
+            <div id="label">
+                選択した箇所のコメントを変更できます。
+            </div>
+            <div id="button-group">
+                <div class="table-area">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>排泄</th>
+                                <th>コメント</th>
+                                <th>記入者</th>
+                                <th>削除</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let excretion of putDataList let i = index;">
+                                <tr [ngClass]="{'selected-row': i == selectedRow}">
+                                    <td (click)="selectRow(i)">
+                                        {{excretion.str_excretionState}}
+                                    </td>
+                                    <td (click)="selectRow(i)">
+                                        <ng-container *ngIf="excretion.str_remark">
+                                            〇
+                                        </ng-container>
+                                    </td>
+                                    <td (click)="selectRow(i)">
+                                        {{excretion.id_fillOutStaff | staffName}}
+                                    </td>
+                                    <td>
+                                        <app-icon-button class="app-icon-button" icon="remove" size="table-small"
+                                            color="remove" (click)="remove(i)">
+                                        </app-icon-button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="comment-area">
+                    <div class="label">コメント</div>
+                    <ng-container *ngFor="let excretion of putDataList; let i = index;">
+                        <ng-container *ngIf="i == selectedRow">
+                            <textarea class="remark" name="remark" rows="4" cols="20" type="text" [(ngModel)]="excretion.str_remark"></textarea>
+                        </ng-container>
+                    </ng-container>
+                    <div class="add-button" (click)="put()">保存</div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

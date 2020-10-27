@@ -1,0 +1,178 @@
+<div id="edit-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed'">
+    <!-- この中では利用者リストのデータから、ダイアログを開く前に渡されたIDのみを表示する -->
+    <div class="title">編集</div>
+    <div class="content">
+        <div class="sub-content">
+            <div class="sub-content-title">カテゴリ</div>
+            <div class="scroll-area">
+                <ng-container *ngIf="serviceTagData | async as serviceTagData;">
+                    <ng-container *ngFor="let serviceTag of serviceTagData; let i = index;">
+                        <ng-container
+                            *ngIf="i == 0 || (i > 0&& serviceTagData[i].id_serviceTagCategory != serviceTagData[i-1].id_serviceTagCategory)">
+                            <ng-container *ngIf="editCategoryId != serviceTag.id_serviceTagCategory">
+                                <div class="sub-content-row"
+                                    [ngClass]="{'selected': serviceTag.id_serviceTagCategory == selectedServiceCategory}"
+                                    (click)="selectCategory(serviceTag.id_serviceTagCategory)">
+                                    <div class="view">{{serviceTag.str_serviceTagCategory}}</div>
+                                    <app-icon-button icon="create" color="edit" size="small"
+                                        (click)="editCategoryName(serviceTag.id_serviceTagCategory)"></app-icon-button>
+                                </div>
+                            </ng-container>
+                            <ng-container *ngIf="editCategoryId == serviceTag.id_serviceTagCategory">
+                                <div class="sub-content-row"
+                                    [ngClass]="{'selected': serviceTag.id_serviceTagCategory == selectedServiceCategory}"
+                                    (click)="selectCategory(serviceTag.id_serviceTagCategory)">
+                                    <input type="text"
+                                        [ngClass]="{'remove-button-input': !serviceTag.id_serviceTagSubCategory}"
+                                        [(ngModel)]="serviceTag.str_serviceTagCategory">
+                                    <app-icon-button icon="check" color="save" size="small"
+                                        (click)="saveCategoryName(serviceTag.id_serviceTagCategory)"></app-icon-button>
+                                    <!-- id_serviceTagSubCategoryがない時、削除ボタン出現 -->
+                                    <ng-container *ngIf="!serviceTag.id_serviceTagSubCategory">
+                                        <app-icon-button icon="delete" color="remove" size="small" class="remove-button"
+                                            (click)="deleteCategoryName(serviceTag.id_serviceTagCategory)">
+                                        </app-icon-button>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="!isNewCategory">
+                        <div class="sub-content-row no-background">
+                            <div class="edit-new" (click)="editNewCategory()">
+                                新規追加
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="isNewCategory">
+                        <div class="sub-content-row">
+                            <input type="text" [(ngModel)]="newCategoryName">
+                            <app-icon-button icon="add" color="save" size="small" (click)="saveNewCategory()">
+                            </app-icon-button>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-content-title">サブカテゴリ</div>
+            <div class="scroll-area">
+                <ng-container *ngIf="serviceTagData | async as serviceTagData; else nullserviceTagList">
+                    <ng-container *ngFor="let serviceTag of serviceTagData; let i = index;">
+                        <ng-container *ngIf="serviceTag.id_serviceTagCategory == selectedServiceCategory">
+                            <ng-container
+                                *ngIf="i == 0 || (i > 0 && serviceTagData[i].id_serviceTagSubCategory != serviceTagData[i-1].id_serviceTagSubCategory) && serviceTagData[i].id_serviceTagSubCategory">
+                                <ng-container *ngIf="editSubCategoryId != serviceTag.id_serviceTagSubCategory">
+                                    <div class="sub-content-row"
+                                        [ngClass]="{'selected': serviceTag.id_serviceTagSubCategory == selectedServiceSubCategory}"
+                                        (click)="selectSubCategory(serviceTag.id_serviceTagSubCategory)">
+                                        <div class="view">{{serviceTag.str_serviceTagSubCategory}}</div>
+                                        <app-icon-button icon="create" color="edit" size="small"
+                                            (click)="editSubCategoryName(serviceTag.id_serviceTagSubCategory)">
+                                        </app-icon-button>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="editSubCategoryId == serviceTag.id_serviceTagSubCategory">
+                                    <div class="sub-content-row"
+                                        [ngClass]="{'selected': serviceTag.id_serviceTagSubCategory == selectedServiceSubCategory}"
+                                        (click)="selectSubCategory(serviceTag.id_serviceTagSubCategory)">
+                                        <input type="text"
+                                            [ngClass]="{'remove-button-input': !serviceTag.id_serviceTag}"
+                                            [(ngModel)]="serviceTag.str_serviceTagSubCategory">
+                                        <app-icon-button icon="check" color="save" size="small"
+                                            (click)="saveSubCategoryName(serviceTag.id_serviceTagSubCategory)">
+                                        </app-icon-button>
+                                        <!-- id_serviceTagがない時、削除ボタン出現 -->
+                                        <ng-container *ngIf="!serviceTag.id_serviceTag">
+                                            <app-icon-button icon="delete" color="remove" size="small"
+                                                class="remove-button"
+                                                (click)="deleteSubCategoryName(serviceTag.id_serviceTagSubCategory)">
+                                            </app-icon-button>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="selectedServiceCategory != 0">
+                        <ng-container *ngIf="!isNewSubCategory">
+                            <div class="sub-content-row no-background">
+                                <div class="edit-new" (click)="editNewSubCategory()">
+                                    新規追加
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="isNewSubCategory">
+                            <div class="sub-content-row">
+                                <input type="text" [(ngModel)]="newSubCategoryName">
+                                <app-icon-button icon="add" color="save" size="small" (click)="saveNewSubCategory()">
+                                </app-icon-button>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+        <div class="sub-content">
+            <div class="sub-content-title">サービスタグ</div>
+            <div class="scroll-area">
+                <ng-container *ngIf="serviceTagData | async as serviceTagData; else nullserviceTagList">
+                    <ng-container *ngFor="let serviceTag of serviceTagData; let i = index;">
+                        <ng-container *ngIf="serviceTag.id_serviceTagSubCategory == selectedServiceSubCategory">
+                            <ng-container
+                                *ngIf="i == 0 || (i > 0 && serviceTagData[i].id_serviceTag != serviceTagData[i-1].id_serviceTag) && serviceTagData[i].id_serviceTag">
+                                <ng-container
+                                    *ngIf="editServiceTagId != serviceTag.id_serviceTag && serviceTag.is_delete == 0">
+                                    <div class="sub-content-row">
+                                        <div class="view">{{serviceTag.str_serviceTag}}</div>
+                                        <app-icon-button icon="create" color="edit" size="small"
+                                            (click)="editServiceTagName(serviceTag.id_serviceTag)">
+                                        </app-icon-button>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="editServiceTagId == serviceTag.id_serviceTag">
+                                    <div class="sub-content-row">
+                                        <input type="text" class="remove-button-input"
+                                            [(ngModel)]="serviceTag.str_serviceTag">
+                                        <app-icon-button icon="check" color="save" size="small"
+                                            (click)="saveServiceTagName(serviceTag.id_serviceTag)">
+                                        </app-icon-button>
+                                        <app-icon-button icon="delete" color="remove" size="small" class="remove-button"
+                                            (click)="deleteServiceTagName(serviceTag.id_serviceTag)">
+                                        </app-icon-button>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="selectedServiceCategory != 0 && selectedServiceSubCategory != 0">
+                        <ng-container *ngIf="!isNewServiceTag">
+                            <div class="sub-content-row no-background">
+                                <div class="edit-new" (click)="editNewServiceTag()">
+                                    新規追加
+                                </div>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="isNewServiceTag">
+                            <div class="sub-content-row">
+                                <input type="text" [(ngModel)]="newServiceTagName">
+                                <app-icon-button icon="add" color="save" size="small" (click)="saveNewServiceTag()">
+                                </app-icon-button>
+                            </div>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <ng-template #nullserviceTagList>
+        データ読み込み中・・・
+    </ng-template>
+
+
+    <div class="button-row">
+        <app-button label="戻る" color="simple" size="medium" class="table-button" (click)="close()"></app-button>
+    </div>
+</div>
+
+<div id="overlay" (click)="close()" [@openClose]="isOpen ? 'open' :'closed'"></div>

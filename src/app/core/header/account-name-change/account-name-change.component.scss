@@ -1,0 +1,76 @@
+/* 自由にカスタム可能 */
+.dialog {
+    min-height: 100px;
+    width: 320px;
+    margin: 30px auto;
+    padding: 20px 30px;
+    background: #ffffff;
+    border-radius: 5px;
+    top: 50px;
+    right: 0;
+ }
+
+ /*  モーダルウィンドウを実現するためのCSS */
+ #dialog-container {
+    position:  fixed;
+    z-index: 100;
+    opacity: 0;
+    padding: 20px;
+    margin: 10px 220px;
+    border-radius: 10px;
+    color: #333;
+ }
+
+ /*  モーダルウィンドウを実現するためのCSS */
+ #overlay {
+    position: fixed;
+    top: 0px;
+    left:  0px;
+    z-index:  99;
+    background:  rgba(0,0,0,0.1);
+    width:  100%;
+    height: 100%;
+    opacity: 0;
+ }
+
+ .material-icons {
+    vertical-align: middle;
+    font-size: 2rem;
+    font-weight: 600;
+    padding-bottom: 5px;
+ }
+
+
+ #dialog-title {
+     font-size: 1.3rem;
+     font-weight: 600;
+    line-height: 2;
+ }
+
+ .dialog-row-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 10px;
+    padding: 5px;
+ }
+
+ .dialog-row-content {
+    font-size: 1.1rem;
+    padding: 5px;
+ }
+
+ #discription {
+     padding: 5px;
+ }
+
+ input {
+    padding: 5px 10px 2px;
+    font-size: 1.2rem;
+    margin: 5px;
+    border: 1px solid #333;
+ }
+
+ .button-row {
+    text-align: end;
+    margin-top: 20px;
+}

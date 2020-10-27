@@ -1,0 +1,59 @@
+<app-page-title [pageTitle]="pageTitle"></app-page-title>
+
+<!-- 本日のデータを表示 -->
+<div class="page-content">
+    <div class="button-area">
+        <div class="toggle-button" [ngClass]="{'distribute-selected': mode == 'distribute'}"(click)="toggleMode('distribute')">提供</div>
+        <div class="toggle-button" [ngClass]="{'collect-selected': mode == 'collect'}"(click)="toggleMode('collect')">回収</div>
+        <ng-container *ngFor="let amount of numHydrateList">
+            <div class="amount-button" [ngClass]="{'unvisible': mode == 'collect','amount-selected': amount == selectedNumHydrate}" (click)="selectNumHydrate(amount)">{{amount |numHydrate}}</div>
+        </ng-container>
+        <div id="menu-toggle" (click)="menuToggle()">
+            <div id="icon-box">
+                <div class="icon-box-row">入力</div>
+                <div class="icon-box-row"><i class="material-icons" id="account-icon">edit</i></div>              
+            </div>
+            <div id="account-name">{{staffName}}</div>
+        </div>
+    </div>
+
+    <div class="table-area">
+        <table class="sticky-table">
+            <thead>
+                <tr>
+                    <th>利用者名</th>
+                    <ng-container *ngFor="let time of timeTable">
+                        <th>{{time.time | timeHHmm}}</th>
+                    </ng-container>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let record of hydrationList">
+                    <tr>
+                        <th>{{record.careReceiver.str_careReceiver}} 様</th>
+                        <ng-container *ngFor="let hydration of record.time">
+                            <td (click)="clickTab(record,hydration)">
+                                <ng-container *ngIf="hydration.distribute">
+                                    <div class="distribute">
+                                        {{hydration.distribute.num_hydrate | numHydrate}}
+                                        <ng-container *ngIf="hydration.distribute.str_remark">
+                                            <span>!</span>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngIf="hydration.collect">
+                                    <div class="collect">
+                                        {{hydration.collect.num_hydrate | numHydrate}}
+                                        <ng-container *ngIf="hydration.collect.str_remark">
+                                            <span><i class="material-icons" id="calendarIcon">info</i></span>
+                                        </ng-container>
+                                    </div>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                    </tr>
+                </ng-container>
+            </tbody>
+        </table>
+    </div>
+</div>

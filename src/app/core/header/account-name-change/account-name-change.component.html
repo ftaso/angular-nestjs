@@ -1,0 +1,24 @@
+<!-- ヘッダーのメニュー classの情報は、HeaderMenuServiceから入れている-->
+<div id="dialog-container" [class]="data.class" [@openClose]="isOpen ? 'open' :'closed' ">
+    <div id="dialog-title"><i class="material-icons">person</i> アカウント名の変更</div>
+    <ng-container *ngIf="error">
+        <div class="error-message">
+            {{errorMessage}}
+        </div>
+    </ng-container>
+
+    <div class="dialog-row-label">現在お使いのアカウント名</div>
+    <div class="dialog-row-content">{{oldAccountName}}</div>
+    <div class="dialog-row-label">新しく設定するアカウント名</div>
+    <div class="form-row">
+        <div class="form-content">
+            <input type="text" [(ngModel)]="newAccountName">
+        </div>
+    </div>
+    <div class="button-row">
+        <app-button label="送信" color="save" size="medium" class="table-button" (click)="submit()"></app-button>
+    </div>
+</div>
+
+<!-- オーバーレイ -->
+<div id="overlay" (click)="closeModal()" [@openClose]="isOpen ? 'open' :'closed'"></div>
