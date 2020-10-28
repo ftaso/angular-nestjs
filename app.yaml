@@ -1,2 +1,4 @@
 service: develop # developのときはコメントアウト外す
 runtime: nodejs12
+network:
+  session_affinity: true

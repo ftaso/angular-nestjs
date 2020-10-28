@@ -18,9 +18,10 @@ async function bootstrap() {
   };
   app.enableCors(options);
   app.setGlobalPrefix('api');
-  console.log('test!')
+  console.log('test!');
   app.use(cookieParser());
-  await app.listen(process.env.PORT || 4200);
+  // await app.listen(process.env.PORT || 4200);
+  await app.listen(process.env.PORT || 4000);
 }
 
 // Webpack will replace 'require' with '__webpack_require__'

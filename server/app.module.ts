@@ -8,7 +8,6 @@ import { AppService } from './app.service';
 import { DbConfigService, dbConfigService } from './db-config/db-config.service';
 import { StaffModule } from './api/staff/staff.module';
 import { AuthModule } from './api/auth/auth.module';
-import { EventsGateway } from './websocket/events.gateway';
 import { AttendanceModule } from './api/attendance/attendance.module';
 import { MealModule } from './api/meal/meal.module';
 import { CareReceiverModule } from './api/care-receiver/care-receiver.module';
@@ -27,6 +26,7 @@ import { ServiceModule } from './api/service/service.module';
 import { ServiceTypeModule } from './api/service-type/service-type.module';
 import { ServiceDetailMapModule } from './api/service-detail-map/service-detail-map.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { EventModule } from './websocket/event.module';
 
 @Module({
   imports: [
@@ -54,12 +54,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ServiceModule,
     ServiceTypeModule,
     ServiceDetailMapModule,
+    EventModule
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    DbConfigService,
-    // EventsGateway
+    DbConfigService
   ]})
 export class AppModule {}
 

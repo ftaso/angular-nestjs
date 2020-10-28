@@ -4,16 +4,16 @@ export class BaseConst {
     // public static BASE_ENDPOINT = 'https://ikoinoie26.com/api';
     // public static BASE_SOCKETPOINT = 'https://ikoinoie26.com';
     // DEVELOP
-    // public static BASE_WINDOWPOINT = 'https://develop.ikoinoie26.com';
-    // public static BASE_ENDPOINT = 'https://develop.ikoinoie26.com/api';
-    // public static BASE_SOCKETPOINT = 'https://develop.ikoinoie26.com';
+    public static BASE_WINDOWPOINT = 'https://develop.ikoinoie26.com';
+    public static BASE_ENDPOINT = 'https://develop.ikoinoie26.com/api';
+    public static BASE_SOCKETPOINT = 'https://develop.ikoinoie26.com';
 
 
     // public static BASE_STORAGEPOINT = 'https://storage.cloud.google.com/gloridge-bucket/';
 
-    public static BASE_WINDOWPOINT = 'http://localhost:4200';
-    public static BASE_ENDPOINT = 'http://localhost:4200/api';
-    public static BASE_SOCKETPOINT = 'http://localhost:3001';
+    // public static BASE_WINDOWPOINT = 'http://localhost:4200';
+    // public static BASE_ENDPOINT = 'http://localhost:4200/api';
+    // public static BASE_SOCKETPOINT = 'http://localhost:3001';
 }
 
 export class ConstURL {
