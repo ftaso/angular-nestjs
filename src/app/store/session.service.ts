@@ -47,21 +47,21 @@ export class SessionService {
   constructor(
   ) {
     // ローカルストレージ内に情報があるかを確認、あれば反映させる。
-    if (localStorage.getItem(this.MY_STAFF_ID_KEY)) {
-      this.sessionLoginStaffStateState.staffId = JSON.parse(localStorage.getItem(this.MY_STAFF_ID_KEY)).id_staff;
-    }
-    if (localStorage.getItem(this.MY_ACCOUNT_NAME_KEY)) {
-      this.sessionLoginStaffStateState.accountName = JSON.parse(localStorage.getItem(this.MY_ACCOUNT_NAME_KEY)).str_accountName;
-    }
-    if (localStorage.getItem(this.MY_IS_ADMINISTRATOR_KEY)) {
-      this.sessionLoginStaffStateState.isAdministrator = JSON.parse(localStorage.getItem(this.MY_IS_ADMINISTRATOR_KEY)).is_administrator;
-    }
-    if (localStorage.getItem(this.MY_IS_DEVELOPER_KEY)) {
-      this.sessionLoginStaffStateState.isDeveloper = JSON.parse(localStorage.getItem(this.MY_IS_DEVELOPER_KEY)).is_developer;
-    }
-    if (localStorage.getItem(this.MY_TOKEN_KEY)) {
-      this.sessionLoginStaffStateState.token = JSON.parse(localStorage.getItem(this.MY_TOKEN_KEY)).token;
-    }
+    // if (localStorage.getItem(this.MY_STAFF_ID_KEY)) {
+    //   this.sessionLoginStaffStateState.staffId = JSON.parse(localStorage.getItem(this.MY_STAFF_ID_KEY)).id_staff;
+    // }
+    // if (localStorage.getItem(this.MY_ACCOUNT_NAME_KEY)) {
+    //   this.sessionLoginStaffStateState.accountName = JSON.parse(localStorage.getItem(this.MY_ACCOUNT_NAME_KEY)).str_accountName;
+    // }
+    // if (localStorage.getItem(this.MY_IS_ADMINISTRATOR_KEY)) {
+    //   this.sessionLoginStaffStateState.isAdministrator = JSON.parse(localStorage.getItem(this.MY_IS_ADMINISTRATOR_KEY)).is_administrator;
+    // }
+    // if (localStorage.getItem(this.MY_IS_DEVELOPER_KEY)) {
+    //   this.sessionLoginStaffStateState.isDeveloper = JSON.parse(localStorage.getItem(this.MY_IS_DEVELOPER_KEY)).is_developer;
+    // }
+    // if (localStorage.getItem(this.MY_TOKEN_KEY)) {
+    //   this.sessionLoginStaffStateState.token = JSON.parse(localStorage.getItem(this.MY_TOKEN_KEY)).token;
+    // }
     // 反映した結果をSubscriberに通知
     this.setStaffData(this.sessionLoginStaffStateState);
   }
@@ -126,19 +126,19 @@ export class SessionService {
 
   // ログイン情報をローカルストレージへ保存する処理
   protected setStaffDataToLocalStorage(loginStaffData: LoginStaffData): void {
-    localStorage.setItem(this.MY_STAFF_ID_KEY, JSON.stringify({ id_staff: loginStaffData.staffId }));
-    localStorage.setItem(this.MY_ACCOUNT_NAME_KEY, JSON.stringify({ str_accountName: loginStaffData.accountName }));
-    localStorage.setItem(this.MY_IS_ADMINISTRATOR_KEY, JSON.stringify({ is_administrator: loginStaffData.isAdministrator }));
-    localStorage.setItem(this.MY_IS_DEVELOPER_KEY, JSON.stringify({ is_developer: loginStaffData.isDeveloper }));
-    localStorage.setItem(this.MY_TOKEN_KEY, JSON.stringify({ token: loginStaffData.token }));
+    // localStorage.setItem(this.MY_STAFF_ID_KEY, JSON.stringify({ id_staff: loginStaffData.staffId }));
+    // localStorage.setItem(this.MY_ACCOUNT_NAME_KEY, JSON.stringify({ str_accountName: loginStaffData.accountName }));
+    // localStorage.setItem(this.MY_IS_ADMINISTRATOR_KEY, JSON.stringify({ is_administrator: loginStaffData.isAdministrator }));
+    // localStorage.setItem(this.MY_IS_DEVELOPER_KEY, JSON.stringify({ is_developer: loginStaffData.isDeveloper }));
+    // localStorage.setItem(this.MY_TOKEN_KEY, JSON.stringify({ token: loginStaffData.token }));
   }
 
   // ローカルストレージ内に保管するログイン情報を消す処理
   protected clearLocalStorage(): void {
-    localStorage.removeItem(this.MY_STAFF_ID_KEY);
-    localStorage.removeItem(this.MY_ACCOUNT_NAME_KEY);
-    localStorage.removeItem(this.MY_IS_ADMINISTRATOR_KEY);
-    localStorage.removeItem(this.MY_IS_DEVELOPER_KEY);
-    localStorage.removeItem(this.MY_TOKEN_KEY);
+    // localStorage.removeItem(this.MY_STAFF_ID_KEY);
+    // localStorage.removeItem(this.MY_ACCOUNT_NAME_KEY);
+    // localStorage.removeItem(this.MY_IS_ADMINISTRATOR_KEY);
+    // localStorage.removeItem(this.MY_IS_DEVELOPER_KEY);
+    // localStorage.removeItem(this.MY_TOKEN_KEY);
   }
 }
