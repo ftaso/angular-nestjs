@@ -20,8 +20,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   console.log('test!')
   app.use(cookieParser());
-  // await app.listen(process.env.PORT || 4200);
-  await app.listen(4000);
+  await app.listen(process.env.PORT || 4200);
 }
 
 // Webpack will replace 'require' with '__webpack_require__'

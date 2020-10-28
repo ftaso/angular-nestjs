@@ -12,7 +12,7 @@ export class BaseConst {
     // public static BASE_STORAGEPOINT = 'https://storage.cloud.google.com/gloridge-bucket/';
 
     public static BASE_WINDOWPOINT = 'http://localhost:4200';
-    public static BASE_ENDPOINT = 'http://localhost:4000/api';
+    public static BASE_ENDPOINT = 'http://localhost:4200/api';
     public static BASE_SOCKETPOINT = 'http://localhost:3001';
 }
 

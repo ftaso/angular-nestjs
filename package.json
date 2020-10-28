@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "dev:ssr": "ng run angular-nestjs-ssr:serve-ssr --trace-deprecation",
+    "dev:ssr": "ng run angular-nestjs-ssr:serve-ssr",
     "serve:ssr": "node dist/angular-nestjs-ssr/server/main.js",
     "build:ssr": "ng build --prod && ng run angular-nestjs-ssr:server:production",
     "prerender": "ng run angular-nestjs-ssr:prerender",
