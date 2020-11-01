@@ -5,11 +5,6 @@ import { HandingOver } from '../entity/handing-over.entity';
 import { Hydration } from '../entity/hydration.entity';
 import { Meal } from '../entity/meal.entity';
 import { RegularSchedule } from '../entity/regular-schedule.entity';
-import { ServiceTagCategory } from '../entity/service-tag-category.entity';
-import { ServiceTagSubCategory } from '../entity/service-tag-sub-category.entity';
-import { ServiceTagMap } from '../entity/service-tag-map.entity';
-import { ServiceTag } from '../entity/service-tag.entity';
-import { TimeFixedService } from '../entity/time-fixed-service.entity';
 import { Vital } from '../entity/vital.entity';
 import { Staff } from '../entity/staff.entity';
 import { Record } from '../entity/record.entity';
@@ -17,6 +12,7 @@ import { Service } from '../entity/service.entity';
 import { ServiceType } from '../entity/service-type.entity';
 import { ServiceDetail } from '../entity/service-detail.entity';
 import { ServiceDetailMap } from '../entity/service-detail-map.entity';
+import { Session } from '../entity/session.entity';
 
 @Injectable()
 export class DbConfigService {
@@ -48,16 +44,12 @@ export class DbConfigService {
                     Hydration,
                     Meal,
                     RegularSchedule,
-                    ServiceTagCategory,
-                    ServiceTagSubCategory,
-                    ServiceTagMap,
-                    ServiceTag,
-                    TimeFixedService,
                     Vital,
                     Service,
                     ServiceType,
                     ServiceDetail,
-                    ServiceDetailMap
+                    ServiceDetailMap,
+                    Session
                 ],
                 synchronize: false // true にするとforeign_key周りでerror吐く
             };
@@ -85,16 +77,12 @@ export class DbConfigService {
                     Hydration,
                     Meal,
                     RegularSchedule,
-                    ServiceTagCategory,
-                    ServiceTagSubCategory,
-                    ServiceTagMap,
-                    ServiceTag,
-                    TimeFixedService,
                     Vital,
                     Service,
                     ServiceType,
                     ServiceDetail,
-                    ServiceDetailMap
+                    ServiceDetailMap,
+                    Session
                 ],
                 synchronize: false // true にするとforeign_key周りでerror吐く
             };

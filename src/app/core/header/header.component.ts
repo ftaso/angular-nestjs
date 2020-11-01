@@ -41,6 +41,10 @@ export class HeaderComponent implements OnInit {
     this.menuFlag.emit();
   }
 
+  refresh(): void {
+    location.reload();
+  }
+
   // ログアウトボタンを押した時の処理
   logout(): void {
     this.authService.logout();

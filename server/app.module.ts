@@ -16,9 +16,6 @@ import { HydrationModule } from './api/hydration/hydration.module';
 import { VitalModule } from './api/vital/vital.module';
 import { ExcretionModule } from './api/excretion/excretion.module';
 import { ServiceSheetModule } from './api/service-sheet/service-sheet.module';
-import { ServiceTagModule } from './api/service-tag/service-tag.module';
-import { TimeFixedServiceModule } from './api/time-fixed-service/time-fixed-service.module';
-import { ServiceTagMapModule } from './api/service-tag-map/service-tag-map.module';
 import { HandingOverModule } from './api/handing-over/handing-over.module';
 import { RegularScheduleModule } from './api/regular-schedule/regular-schedule.module';
 import { ServiceDetailModule } from './api/service-detail/service-detail.module';
@@ -27,6 +24,7 @@ import { ServiceTypeModule } from './api/service-type/service-type.module';
 import { ServiceDetailMapModule } from './api/service-detail-map/service-detail-map.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { EventModule } from './websocket/event.module';
+import { SessionModule } from './api/session/session.module';
 
 @Module({
   imports: [
@@ -45,16 +43,14 @@ import { EventModule } from './websocket/event.module';
     VitalModule,
     ExcretionModule,
     ServiceSheetModule,
-    ServiceTagModule,
-    TimeFixedServiceModule,
-    ServiceTagMapModule,
     HandingOverModule,
     RegularScheduleModule,
     ServiceDetailModule,
     ServiceModule,
     ServiceTypeModule,
     ServiceDetailMapModule,
-    EventModule
+    EventModule,
+    SessionModule
   ],
   controllers: [AppController],
   providers: [

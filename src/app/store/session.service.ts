@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { BehaviorSubject } from 'rxjs';
 import { LoginStaffData } from '../class/staff';
+import { ConstURL } from '../class/url';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,6 @@ export class SessionService {
     staffName: '',
     isAdministrator: 0,
     isDeveloper: 0,
-    token: ''
   });
 
   // ログイン情報そのもの
@@ -35,7 +35,6 @@ export class SessionService {
     staffName: '',
     isAdministrator: 0,
     isDeveloper: 0,
-    token: ''
   };
 
   // Subscribe するためのプロパティ(Component間での共有のため)
@@ -45,26 +44,7 @@ export class SessionService {
   public loginStaffState$ = this.loginStaffState.asObservable();
 
   constructor(
-  ) {
-    // ローカルストレージ内に情報があるかを確認、あれば反映させる。
-    // if (localStorage.getItem(this.MY_STAFF_ID_KEY)) {
-    //   this.sessionLoginStaffStateState.staffId = JSON.parse(localStorage.getItem(this.MY_STAFF_ID_KEY)).id_staff;
-    // }
-    // if (localStorage.getItem(this.MY_ACCOUNT_NAME_KEY)) {
-    //   this.sessionLoginStaffStateState.accountName = JSON.parse(localStorage.getItem(this.MY_ACCOUNT_NAME_KEY)).str_accountName;
-    // }
-    // if (localStorage.getItem(this.MY_IS_ADMINISTRATOR_KEY)) {
-    //   this.sessionLoginStaffStateState.isAdministrator = JSON.parse(localStorage.getItem(this.MY_IS_ADMINISTRATOR_KEY)).is_administrator;
-    // }
-    // if (localStorage.getItem(this.MY_IS_DEVELOPER_KEY)) {
-    //   this.sessionLoginStaffStateState.isDeveloper = JSON.parse(localStorage.getItem(this.MY_IS_DEVELOPER_KEY)).is_developer;
-    // }
-    // if (localStorage.getItem(this.MY_TOKEN_KEY)) {
-    //   this.sessionLoginStaffStateState.token = JSON.parse(localStorage.getItem(this.MY_TOKEN_KEY)).token;
-    // }
-    // 反映した結果をSubscriberに通知
-    this.setStaffData(this.sessionLoginStaffStateState);
-  }
+  ) { }
 
   // ログイン状態(isLoginState)の更新イベントを発火させる処理
   public onNotifySharedDataChanged(isLogin: boolean): void {
@@ -88,7 +68,12 @@ export class SessionService {
 
   // tokenを返す
   public getToken(): string {
-    return this.sessionLoginStaffStateState.token;
+    return '';
+  }
+
+  // Guardで使用、管理者権限を持つかどうか
+  public isAuth(): number {
+    return this.sessionLoginStaffStateState.staffId;
   }
 
   // Guardで使用、管理者権限を持つかどうか
@@ -110,11 +95,9 @@ export class SessionService {
       staffName: '',
       isAdministrator: 0,
       isDeveloper: 0,
-      token: ''
     };
+    this.onNotifySharedDataChanged(false);
     this.onNotifyStaffDataChanged(this.sessionLoginStaffStateState);
-    // ローカルストレージ内のデータ削除
-    this.clearLocalStorage();
   }
 
   // 以下、sessionService内でのみ処理
@@ -133,12 +116,5 @@ export class SessionService {
     // localStorage.setItem(this.MY_TOKEN_KEY, JSON.stringify({ token: loginStaffData.token }));
   }
 
-  // ローカルストレージ内に保管するログイン情報を消す処理
-  protected clearLocalStorage(): void {
-    // localStorage.removeItem(this.MY_STAFF_ID_KEY);
-    // localStorage.removeItem(this.MY_ACCOUNT_NAME_KEY);
-    // localStorage.removeItem(this.MY_IS_ADMINISTRATOR_KEY);
-    // localStorage.removeItem(this.MY_IS_DEVELOPER_KEY);
-    // localStorage.removeItem(this.MY_TOKEN_KEY);
-  }
+
 }

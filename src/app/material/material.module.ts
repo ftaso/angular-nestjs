@@ -9,6 +9,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatMomentDateModule} from '@angular/material-moment-adapter';
 import { MatSelectModule } from '@angular/material/select';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 const globalRippleConfig: RippleGlobalOptions = {
   animation: {
@@ -28,7 +29,8 @@ const globalRippleConfig: RippleGlobalOptions = {
     MatMomentDateModule,
     MatInputModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   exports: [
     MatFormFieldModule,
@@ -37,7 +39,8 @@ const globalRippleConfig: RippleGlobalOptions = {
     MatMomentDateModule,
     MatInputModule,
     MatSelectModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatSnackBarModule
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'ja-JP'},

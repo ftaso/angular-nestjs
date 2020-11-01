@@ -1,37 +1,52 @@
 import { Injectable } from '@nestjs/common';
 import { StaffService } from '../staff/staff.service';
+import { SessionService } from '../session/session.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import * as uuid from 'uuid';
 
 @Injectable()
 export class AuthService {
   constructor(
     private staffService: StaffService,
+    private sessionService: SessionService,
     private jwtService: JwtService,
-    private configServie: ConfigService
   ) { }
 
-  public getCookiesJwtToken(staff: any){
-    const payload = { accountName: staff.str_accountName, sub: staff.id_staff };
-    const token =  this.jwtService.sign(payload);
-    console.log(`Authentication=${token}; HttpOnly; Path=/; Max-Age=43200`);
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=43200`;
-    // return this.staffService.findOne(staff.str_accountName).then(result => {
-    //   return {
-    //     Error: false,
-    //     auth: true,
-    //     staffId: result.id_staff,
-    //     isAdministrator: result.is_administrator,
-    //     isDeveloper: result.is_developer,
-    //     accountName: result.str_accountName,
-    //     token: this.jwtService.sign(payload),
-    //     // token: jwt.sign({
-    //     //   staffId: rows[0].id_staff
-    //     // }, config.secret, { expiresIn: 43200 }) // expires in 12 hours
-    //     // // }, config.secret, { expiresIn: 60 }) // expires in 60 seconds
-    //   };
-    // });
+  public getCookiesJwtToken(staff: any): string {
+    // アカウント名＋スタッフIDからトークンを作成
+    console.log(staff);
+    const payload = { accountName: staff.accountName, sub: staff.staffId };
+    const token = this.jwtService.sign(payload);
+    // return `Authentication=${token}; HttpOnly; Path=/; Max-Age=43200;`;
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=600;`;
+  }
+
+  public publishSessionId(staff: any): string {
+    // セッションIDを発行し、DBに保存
+    const sessionId = this.generateSessionId();
+    this.sessionService.post(sessionId, staff.staffId);
+    return sessionId;
+  }
+
+  public generateSessionId(): string {
+    const sessionId = uuid.v4();
+    console.log(sessionId);
+    return sessionId;
+  }
+
+  async login(staff: any): Promise<any> {
+    // DBからユーザーデータを取得
+    const userData = await this.staffService.findOne(staff.str_accountName);
+    return {
+      Error: false,
+      auth: true,
+      staffId: userData.id_staff,
+      isAdministrator: userData.is_administrator,
+      isDeveloper: userData.is_developer,
+      accountName: userData.str_accountName
+    };
   }
 
   async validateStaff(accontName: string, pass: string): Promise<any> {
@@ -44,22 +59,4 @@ export class AuthService {
     return null;
   }
 
-  async login(staff: any) {
-    const payload = { accountName: staff.str_accountName, sub: staff.id_staff };
-    return this.staffService.findOne(staff.str_accountName).then(result => {
-      return {
-        Error: false,
-        auth: true,
-        staffId: result.id_staff,
-        isAdministrator: result.is_administrator,
-        isDeveloper: result.is_developer,
-        accountName: result.str_accountName,
-        token: this.jwtService.sign(payload),
-        // token: jwt.sign({
-        //   staffId: rows[0].id_staff
-        // }, config.secret, { expiresIn: 43200 }) // expires in 12 hours
-        // // }, config.secret, { expiresIn: 60 }) // expires in 60 seconds
-      };
-    });
-  }
 }

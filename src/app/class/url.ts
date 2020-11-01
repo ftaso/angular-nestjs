@@ -8,31 +8,16 @@ export class BaseConst {
     public static BASE_ENDPOINT = 'https://develop.ikoinoie26.com/api';
     public static BASE_SOCKETPOINT = 'https://develop.ikoinoie26.com';
 
-
-    // public static BASE_STORAGEPOINT = 'https://storage.cloud.google.com/gloridge-bucket/';
-
     // public static BASE_WINDOWPOINT = 'http://localhost:4200';
     // public static BASE_ENDPOINT = 'http://localhost:4200/api';
-    // public static BASE_SOCKETPOINT = 'http://localhost:3001';
+    // public static BASE_SOCKETPOINT = 'http://localhost:4200';
 }
 
 export class ConstURL {
-    // public static Staff_AccountName = `${BaseConst.BASE_ENDPOINT}/staff/accountName`;
-    // public static CareReceiver = `${BaseConst.BASE_ENDPOINT}/careReceiver`;
-    // public static ServiceTag = `${BaseConst.BASE_ENDPOINT}/serviceTag`;
-    // public static ServiceTagCategory = `${BaseConst.BASE_ENDPOINT}/serviceTagCategory`;
-    // public static ServiceTagSubCategory = `${BaseConst.BASE_ENDPOINT}/serviceTagSubCategory`;
-    // public static Meal_Today = `${BaseConst.BASE_ENDPOINT}/meal_today`;
-    // public static Vital_Today = `${BaseConst.BASE_ENDPOINT}/vital_today`;
-    // public static Excretion_Multiple = `${BaseConst.BASE_ENDPOINT}/excretion_multiple`;
-    // public static Hydration_Today = `${BaseConst.BASE_ENDPOINT}/hydration_today`;
-    // public static Record_Date = `${BaseConst.BASE_ENDPOINT}/record_date`;
-    // public static ServiceTagMap = `${BaseConst.BASE_ENDPOINT}/serviceTag_map`;
-    // public static TimeFixedService = `${BaseConst.BASE_ENDPOINT}/timeFixedService`;
-    // public static HandingOver = `${BaseConst.BASE_ENDPOINT}/handingOver`;
-    // public static RegularSchedule_Day = `${BaseConst.BASE_ENDPOINT}/regularSchedule/day`;
     // APIの管理を行う
     public static Login = `${BaseConst.BASE_ENDPOINT}/auth/login`;
+    public static Logout = `${BaseConst.BASE_ENDPOINT}/auth/logout`;
+    public static Session = `${BaseConst.BASE_ENDPOINT}/auth/session`;
     public static Relogin = `${BaseConst.BASE_ENDPOINT}/auth/relogin`;
     // mst_staff
     public static Staff = `${BaseConst.BASE_ENDPOINT}/staff/`;

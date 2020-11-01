@@ -4,7 +4,6 @@ import { Excretion } from './excretion.entity';
 import { HandingOver } from './handing-over.entity';
 import { Hydration } from './hydration.entity';
 import { Meal } from './meal.entity';
-import { TimeFixedService } from './time-fixed-service.entity';
 import { Vital } from './vital.entity';
 
 @Entity({ name: 'mst_staff' })
@@ -32,23 +31,20 @@ export class Staff {
     is_delete: number;
 
     // 各入力に対してFillOutStaffが定義されているため
-    @OneToMany(() => Excretion, excretions => excretions.staff)
-    excretions?: Excretion[];
+    // @OneToMany(() => Excretion, excretions => excretions.staff)
+    // excretions?: Excretion[];
 
-    @OneToMany(() => HandingOver, handingOvers => handingOvers.staff)
-    handingOvers?: HandingOver[];
+    // @OneToMany(() => HandingOver, handingOvers => handingOvers.staff)
+    // handingOvers?: HandingOver[];
 
-    @OneToMany(() => Hydration, hydrations => hydrations.staff)
-    hydrations?: Hydration[];
+    // @OneToMany(() => Hydration, hydrations => hydrations.staff)
+    // hydrations?: Hydration[];
 
-    @OneToMany(() => Meal, meals => meals.staff)
-    meals?: Meal[];
+    // @OneToMany(() => Meal, meals => meals.staff)
+    // meals?: Meal[];
 
-    @OneToMany(() => TimeFixedService, timeFixedServices => timeFixedServices.staff)
-    timeFixedServices?: TimeFixedService[];
-
-    @OneToMany(() => Vital, vitals => vitals.staff)
-    vitals?: Vital[];
+    // @OneToMany(() => Vital, vitals => vitals.staff)
+    // vitals?: Vital[];
 
     constructor(
         str_staffName: string,

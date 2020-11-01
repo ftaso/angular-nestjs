@@ -4,5 +4,4 @@ export class LoginStaffData {
     staffName: string;
     isAdministrator: number;
     isDeveloper: number;
-    token: string;
 }

@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, timeout } from 'rxjs/operators';
 import { ConstURL } from '../class/url';
 import { SessionService } from '../store/session.service';
+import { BaseService } from '../services/base.service';
 
 
 @Injectable({
@@ -15,14 +16,15 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    protected sessionServie: SessionService,
+    protected sessionService: SessionService,
+    protected baseService: BaseService,
     protected router: Router
   ) { }
 
   // AuthGurd用の関数
   // トークンがあるかと期限切れでないかを判定
   public isAuthenticated(): boolean {
-    const token = this.sessionServie.getToken();
+    const token = this.sessionService.getToken();
     console.log(token);
     if (!token) {
       return false;
@@ -31,24 +33,7 @@ export class AuthService {
     // true or false
     const jwtHelper = new JwtHelperService();
     if (!jwtHelper.isTokenExpired(token)) {
-      this.sessionServie.onNotifySharedDataChanged(true);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  // LoginGurd用の関数
-  // トークンがあるかと期限切れでないかを判定
-  public checkLogin(): boolean {
-    const token = this.sessionServie.getToken();
-    if (!token) {
-      return false;
-    }
-    // Check whether the token is expired and return
-    // true or false
-    const jwtHelper = new JwtHelperService();
-    if (!jwtHelper.isTokenExpired(token)) {
+      this.sessionService.onNotifySharedDataChanged(true);
       return true;
     } else {
       return false;
@@ -65,10 +50,10 @@ export class AuthService {
           // login successful if there's a jwt token in the response
           console.log(user);
           // this.router.navigate(['/attendance']);
-          if (user && user.token) {
+          if (user && user.auth) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            this.sessionServie.onNotifySharedDataChanged(true);
-            this.sessionServie.setStaffData(user);
+            this.sessionService.onNotifySharedDataChanged(true);
+            this.sessionService.setStaffData(user);
             this.router.navigate(['/attendance']);
           }
           return user;
@@ -77,11 +62,24 @@ export class AuthService {
   }
 
   // ログアウトの処理
-  public logout(): void {
-    // sessionServiceに保持するデータを削除
-    this.sessionServie.onNotifySharedDataChanged(false);
-    this.sessionServie.logout();
-    this.router.navigate(['/login']);
+  public logout(): any {
+    // Cookieに保持するデータを削除
+    console.log('logouuououou')
+    const URL = ConstURL.Logout;
+    const body = new HttpParams();
+    return this.baseService.post(URL, body, '').subscribe(
+      data => {
+        console.log(data);
+      },
+      error => {
+
+      },
+      () => {
+        // Sessionストア内の情報の破棄
+        this.sessionService.logout();
+        this.router.navigate(['/login']);
+      }
+    )
   }
 
   // アカウント名・パスワード変更時の再発行処理
@@ -94,12 +92,36 @@ export class AuthService {
           console.log(user);
           if (user && user.token) {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            this.sessionServie.onNotifySharedDataChanged(true);
-            this.sessionServie.setStaffData(user);
+            this.sessionService.onNotifySharedDataChanged(true);
+            this.sessionService.setStaffData(user);
             console.log('relogin!');
           }
           return user;
         })
       );
+  }
+
+  async checkSession(): Promise<any> {
+    return new Promise<number>((resolve) => {
+      const URL = ConstURL.Session;
+      const body = new HttpParams();
+      let userData;
+      this.baseService.post(URL, body, '').subscribe(
+        data => {
+          console.log(data);
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          userData = data;
+        },
+        error => {
+          console.log('エラー', error);
+          resolve(error.status);
+        },
+        () => {
+          this.sessionService.onNotifySharedDataChanged(true);
+          this.sessionService.setStaffData(userData);
+          resolve(200);
+        }
+      );
+    });
   }
 }

@@ -4,9 +4,7 @@ import { Excretion } from './excretion.entity';
 import { HandingOver } from './handing-over.entity';
 import { Hydration } from './hydration.entity';
 import { Meal } from './meal.entity';
-import { ServiceTagMap } from './service-tag-map.entity';
 import { Service } from './service.entity';
-import { TimeFixedService } from './time-fixed-service.entity';
 import { Vital } from './vital.entity';
 
 @Entity({ name: 'tbl_record' })
@@ -43,14 +41,10 @@ export class Record {
     @OneToMany(() => Meal, meals => meals.record)
     meals?: Meal[] | undefined;
 
-    @OneToMany(() => ServiceTagMap, serviceTagMaps => serviceTagMaps.record)
-    serviceTagMaps?: ServiceTagMap[] | undefined;
 
     @OneToMany(() => Service, services => services.record)
     services?: Service[] | undefined;
 
-    @OneToMany(() => TimeFixedService, timeFixedServices => timeFixedServices.record)
-    timeFixedServices?: TimeFixedService[] | undefined;
 
     @OneToMany(() => Vital, vitals => vitals.record)
     vitals?: Vital[] | undefined;

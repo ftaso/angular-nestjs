@@ -1,18 +1,37 @@
-<ng-container *ngIf="isLogin">
-    <app-header (menuFlag)="sideNavToggle()"></app-header>
-</ng-container>
-<div id="body">
+<ng-container *ngIf="isBrowser; else server">
     <ng-container *ngIf="isLogin">
-        <div id="side-nav">
-            <app-side-nav></app-side-nav>
-        </div>
+        <app-header (menuFlag)="sideNavToggle()"></app-header>
     </ng-container>
-    <div [@routeAnimations]="prepareRoute(outlet)" [ngClass]="{'page':isLogin, 'login-page':!isLogin}">
-        <router-outlet #outlet="outlet"></router-outlet>
+    <div id="body">
+        <ng-container *ngIf="isLogin">
+            <div id="side-nav">
+                <app-side-nav></app-side-nav>
+            </div>
+        </ng-container>
+        <div [@routeAnimations]="prepareRoute(outlet)" [ngClass]="{'page':isLogin, 'login-page':!isLogin}">
+            <router-outlet #outlet="outlet"></router-outlet>
+        </div>
+        <ng-container *ngIf="isLogin">
+            <div id="footer">
+                <app-footer></app-footer>
+            </div>
+        </ng-container>
     </div>
-    <ng-container *ngIf="isLogin">
-        <div id="footer">
-            <app-footer></app-footer>
+</ng-container>
+
+
+<ng-template #server>
+    <div id="loading-card">
+        <div id="card-title">
+            <img src="../../../assets/images/ikoinoie.png" alt="いこいの家26">
         </div>
-    </ng-container>
-</div>
+        <div id="card-body">
+            <div id="card-row">
+                データを読み込んでいます。
+            </div>
+            <div id="card-row">
+                しばらくお待ちください。
+            </div>
+        </div>
+    </div>
+</ng-template>

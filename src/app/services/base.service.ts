@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
 import { catchError, map, timeout } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 // axios を require してインスタンスを生成する
 
 @Injectable({
@@ -13,12 +15,16 @@ export class BaseService {
   protected _model = {};
   protected _model_name = '';
 
-  constructor(protected _http: HttpClient) { }
+  constructor(
+    protected _http: HttpClient,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   headerBuilders(token: string): HttpHeaders {
     const headers = new HttpHeaders()
       .set('Content-Type', 'application/x-www-form-urlencoded')
-      .set('Authorization', 'Bearer ' + token);
+    // .set('Authorization', 'Bearer ' + token);
     return headers;
   }
 
@@ -129,5 +135,43 @@ export class BaseService {
   load(): Observable<any[]> {
     console.log('called load function');
     return of(this._model[this._model_name]);
+  }
+
+  errorHandle(error: any): void {
+    console.log(error);
+    let message;
+    let action;
+    let snackBarRef;
+    switch (error.status) {
+      case 401:
+        message = 'トークンの有効期限が切れています。ログインし直してください。';
+        action = 'ok';
+        snackBarRef = this.snackBar.open(message, action);
+        snackBarRef.onAction().subscribe(() => {
+          this.router.navigate(['/login']);
+        });
+        break;
+      case 408:
+        message = 'データのロードに失敗しました。しばらく時間を空けてからお試しください。';
+        action = 'ok';
+        snackBarRef = this.snackBar.open(message, action);
+        snackBarRef.onAction().subscribe(() => {
+        });
+        break;
+      case 404:
+        message = 'データが見つかりません。';
+        action = 'ok';
+        snackBarRef = this.snackBar.open(message, action);
+        snackBarRef.onAction().subscribe(() => {
+        });
+        break;
+      default:
+        message = `${error.status}: ${error.message}\n上記のエラーが発生しています。`;
+        action = 'ok';
+        snackBarRef = this.snackBar.open(message, action);
+        snackBarRef.onAction().subscribe(() => {
+        });
+        break;
+    }
   }
 }

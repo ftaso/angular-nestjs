@@ -1,10 +1,13 @@
 <div id="header-fixed">
     <div id="header">
-        <div id="menu" (click)="toggle()">
+        <div id="menu" matRipple (click)="toggle()">
             <i class="material-icons" id="menu-icon">menu_open</i>
         </div>
         <div id="main-logo">
             <img src="../../../assets/images/ikoinoie.png" alt="いこいの家26">
+        </div>
+        <div id="refresh"  matRipple (click)="refresh()">
+            <i class="material-icons" id="menu-icon">refresh</i>
         </div>
         <div id="menu-toggle" (click)="menuToggle()">
             <i class="material-icons" id="account-icon">account_circle</i>

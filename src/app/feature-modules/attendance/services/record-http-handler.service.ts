@@ -58,6 +58,7 @@ export class RecordHttpHandlerService {
           console.log(data);
         },
         error => {
+          this.baseService.errorHandle(error);
           reject(true);
         },
         () => {
@@ -82,6 +83,7 @@ export class RecordHttpHandlerService {
           console.log(data);
         },
         error => {
+          this.baseService.errorHandle(error);
           reject(true);
         },
         () => {
@@ -99,6 +101,7 @@ export class RecordHttpHandlerService {
           console.log(data);
         },
         error => {
+          this.baseService.errorHandle(error);
           reject(true);
         },
         () => {
